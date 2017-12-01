@@ -22,7 +22,7 @@
 				<td>${book.overview}</td>
 				<td>
 					<c:forEach items="${book.authors}" var="author">
-						<p>${author.lastname} (${author.nativeCountry})</p>
+						<p>${author.lastName} (${author.nativeCountry})</p>
 					</c:forEach>
 				</td>
 				<td>${book.price}</td>

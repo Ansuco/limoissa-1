@@ -6,9 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -78,7 +78,6 @@ public class FrontServlet extends HttpServlet
 		Set<Author> authors = new HashSet<Author>();
 		Set<Book> books = new HashSet<Book>();
 
-
 		try
 		{			
 			/* Exécution d'une requête de lecture */
@@ -87,22 +86,36 @@ public class FrontServlet extends HttpServlet
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next())
 			{
+				int idbook = resultat.getInt("idbook");
 				
-				Book book = new Book();
-				book.setId(resultat.getInt("idbook"));
-				book.setTitle(resultat.getString("title"));
-				book.setAvailability(resultat.getInt("availability"));
-				book.setOverview(resultat.getString("overview"));
-				book.setPrice(resultat.getFloat("price"));
-				
-				Author author = new Author();
-				author.setId(resultat.getInt("idauthor"));
-				author.setFirstname(resultat.getString("firstname"));
-				author.setLastName(resultat.getString("lastname"));
-				author.setNativeCountry(Country.valueOf(resultat.getString("native_country")));
-				book.addAuthor(author);
-				
-				books.add(book);
+				if(!books.stream().anyMatch(b -> b.getId() == idbook))
+				{
+					Book book = new Book();
+					book.setId(idbook);
+					book.setTitle(resultat.getString("title"));
+					book.setAvailability(resultat.getInt("availability"));
+					book.setOverview(resultat.getString("overview"));
+					book.setPrice(resultat.getFloat("price"));
+					
+					Author author = new Author();
+					author.setId(resultat.getInt("idauthor"));
+					author.setFirstname(resultat.getString("firstname"));
+					author.setLastName(resultat.getString("lastname"));
+					author.setNativeCountry(Country.valueOf(resultat.getString("native_country")));
+					
+					book.addAuthor(author);
+					books.add(book);
+				}
+				else
+				{
+					Author author = new Author();
+					author.setId(resultat.getInt("idauthor"));
+					author.setFirstname(resultat.getString("firstname"));
+					author.setLastName(resultat.getString("lastname"));
+					author.setNativeCountry(Country.valueOf(resultat.getString("native_country")));
+					
+					books.stream().filter(b -> b.getId() == idbook).findFirst().get().addAuthor(author);
+				}
 			}
 
 

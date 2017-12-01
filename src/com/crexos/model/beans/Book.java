@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Book
 {
-	private int id;
+	public int id;
 	private String title;
 	private String overview;
 	private int availability;
