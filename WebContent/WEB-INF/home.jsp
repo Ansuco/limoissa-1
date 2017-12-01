@@ -12,6 +12,7 @@
 		<tr>
 			<th>Titre</th>
 			<th>Résumé</th>
+			<th>Auteur(s)</th>
 			<th>Prix</th>
 			<th>Disponibilité</th>
 		</tr>
@@ -19,6 +20,11 @@
 			<tr>
 				<td>${book.title}</td>
 				<td>${book.overview}</td>
+				<td>
+					<c:forEach items="${book.authors}" var="author">
+						<p>${author.lastname} (${author.nativeCountry})</p>
+					</c:forEach>
+				</td>
 				<td>${book.price}</td>
 				<td>${book.availability}</td>
 			</tr>

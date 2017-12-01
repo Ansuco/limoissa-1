@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.crexos.model.beans.Author;
 import com.crexos.model.beans.Book;
+import com.crexos.model.utils.Country;
 
 /**
  * Servlet implementation class FrontServlet
@@ -51,14 +52,14 @@ public class FrontServlet extends HttpServlet
 		super.init(config);
 
 		String queryBookStr = "SELECT * FROM book";//Lister tout les livres
-		String queryBooksAndAuthors = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id JOIN Author a ON ab.author_id = a.id";
+		String queryBooksAndAuthors = "SELECT b.id as idbook, a.id as idauthor, b.title, b.availability, b.overview, b.price, a.firstname, a.lastname, a.native_country FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id JOIN Author a ON ab.author_id = a.id";
 
 		try
 		{
 			Class.forName("org.mariadb.jdbc.Driver");
 			connexion = DriverManager.getConnection(URL, USER, PASSWORD);
 			
-			queryBooks = connexion.prepareStatement(queryBookStr);
+			queryBooks = connexion.prepareStatement(queryBooksAndAuthors);
 		}
 		catch (ClassNotFoundException | SQLException e)
 		{
@@ -86,15 +87,21 @@ public class FrontServlet extends HttpServlet
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next())
 			{
-				Book book = new Book(
-						resultat.getInt("id"),
-						resultat.getString("title"),
-						resultat.getString("overview"),
-						resultat.getInt("availability"),
-						resultat.getFloat("price"),
-						null
-						);
-
+				
+				Book book = new Book();
+				book.setId(resultat.getInt("idbook"));
+				book.setTitle(resultat.getString("title"));
+				book.setAvailability(resultat.getInt("availability"));
+				book.setOverview(resultat.getString("overview"));
+				book.setPrice(resultat.getFloat("price"));
+				
+				Author author = new Author();
+				author.setId(resultat.getInt("idauthor"));
+				author.setFirstname(resultat.getString("firstname"));
+				author.setLastName(resultat.getString("lastname"));
+				author.setNativeCountry(Country.valueOf(resultat.getString("native_country")));
+				book.addAuthor(author);
+				
 				books.add(book);
 			}
 
