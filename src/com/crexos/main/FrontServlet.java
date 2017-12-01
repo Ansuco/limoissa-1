@@ -6,12 +6,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.crexos.model.beans.Author;
+import com.crexos.model.beans.Book;
 
 /**
  * Servlet implementation class FrontServlet
@@ -43,6 +48,10 @@ public class FrontServlet extends HttpServlet
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		Set<Author> authors = new HashSet<Author>();
+		Set<Book> books = new HashSet<Book>();
+		
+		
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 					
@@ -53,17 +62,21 @@ public class FrontServlet extends HttpServlet
 
 			
 			/* Exécution d'une requête de lecture */
-			ResultSet resultat = statement.executeQuery("SELECT * FROM author;");//Lister tout les auteurs.
+			ResultSet resultat = statement.executeQuery("SELECT * FROM book;");//Lister tout les auteurs.
 
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next())
 			{
-			    int idAuthor = resultat.getInt("id");
-			    String firstNameAuthor = resultat.getString("firstname");
-			    String lastNameAuthor = resultat.getString("lastname");
-
-			    /* Traiter ici les valeurs récupérées. */
-			    System.out.println("ID : " + idAuthor + ", Prénom : " + firstNameAuthor + ", Nom : " + lastNameAuthor);
+			    Book book = new Book(
+			    		resultat.getInt("id"),
+			    		resultat.getString("title"),
+			    		resultat.getString("overview"),
+			    		resultat.getInt("availability"),
+			    		resultat.getFloat("price"),
+			    		null
+			    		);
+			    
+			    books.add(book);
 			}
 			
 
@@ -85,7 +98,7 @@ public class FrontServlet extends HttpServlet
 				}
 		}
 		
-		
+		this.getServletContext().setAttribute("books", books);
 		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 

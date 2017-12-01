@@ -8,6 +8,7 @@ public class Book
 	private int id;
 	private String title;
 	private String overview;
+	private int availability;
 	private float price;
 	private Set<Author> authors;
 	
@@ -16,17 +17,18 @@ public class Book
 		this.setAuthors(new HashSet<Author>());
 	}
 	
-	public Book(int id, String title, String overview, float price, Set<Author> authors)
+	public Book(int id, String title, String overview, int availability, float price, Set<Author> authors)
 	{
-		this(title, overview, price, authors);
+		this(title, overview, availability, price, authors);
 		this.setId(id);
 	}
 	
-	public Book(String title, String overview, float price, Set<Author> authors)
+	public Book(String title, String overview, int availability, float price, Set<Author> authors)
 	{
 		this();
 		this.setTitle(title);
 		this.setOverview(overview);
+		this.setAvailability(availability);
 		this.setPrice(price);
 		this.setAuthors(authors);
 	}
@@ -84,5 +86,13 @@ public class Book
 	public void addAuthor(Author author)
 	{
 		this.getAuthors().add(author);
+	}
+
+	public int getAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(int availability) {
+		this.availability = availability;
 	}
 }
