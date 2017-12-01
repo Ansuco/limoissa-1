@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FrontServlet
  */
-@WebServlet("/FrontServlet")
-public class FrontServlet extends HttpServlet {
+@WebServlet(
+		name="FrontServlet",
+		value="/home"
+		)
+public class FrontServlet extends HttpServlet
+{
 	private static final long serialVersionUID = 1L;
-       
+    private static final String HOME = "/WEB-INF/home.jsp";   
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -25,9 +29,10 @@ public class FrontServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		
+		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 
 	/**
