@@ -10,15 +10,17 @@
 <body>
 	<table>
 		<tr>
-			<th>Nom</th>
-			<th>Prénom</th>
-			<th>Pays d'origine</th>
+			<th>Titre</th>
+			<th>Résumé</th>
+			<th>Prix</th>
+			<th>Disponibilité</th>
 		</tr>
-		<c:forEach items="${authors}" var="author">
+		<c:forEach items="${books}" var="book">
 			<tr>
-				<td>${author.firstName}</td>
-				<td>${author.lastName}</td>
-				<td>${author.nativeCountry}</td>
+				<td>${book.title}</td>
+				<td>${book.overview}</td>
+				<td>${book.price}</td>
+				<td>${book.availability}</td>
 			</tr>
 		</c:forEach>
 	</table>
