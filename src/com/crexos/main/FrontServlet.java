@@ -51,7 +51,7 @@ public class FrontServlet extends HttpServlet
 		super.init(config);
 
 		String queryBookStr = "SELECT * FROM book";//Lister tout les livres
-		String queryBooksAndAuthors = "SELECT * FROM Book b INNER JOIN Authors_books ab ON b.id = ab.author_id INNER JOIN Author a ON a.id = a.book_id";
+		String queryBooksAndAuthors = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id JOIN Author a ON ab.author_id = a.id";
 
 		try
 		{
