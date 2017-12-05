@@ -69,7 +69,7 @@ public class DAOFactory
 		}
 	}
 	
-	BookDAO getBookDAO()
+	public BookDAO getBookDAO()
 	{
 		return new BookDAOImpl();
 	}
