@@ -93,7 +93,7 @@ public class FrontServlet extends HttpServlet
 					Book book = new Book();
 					book.setId(idbook);
 					book.setTitle(resultat.getString("title"));
-					book.setAvailability(resultat.getInt("availability"));
+					book.setAvailability(resultat.getBoolean("availability"));
 					book.setOverview(resultat.getString("overview"));
 					book.setPrice(resultat.getFloat("price"));
 					
