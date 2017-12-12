@@ -73,4 +73,14 @@ public class DAOFactory
 	{
 		return new BookDAOImpl();
 	}
+	
+	public AuthorDAO getAuthorDAO()
+	{
+		return new AuthorDAOImpl();
+	}
+	
+	public UserDAO getUserDAO()
+	{
+		return new UserDAOImpl();
+	}
 }
