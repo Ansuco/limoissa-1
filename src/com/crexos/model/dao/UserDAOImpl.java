@@ -46,6 +46,10 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			DAOFactory.getInstance().close();
+		}
 
 		return user;
 	}
@@ -79,12 +83,16 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			DAOFactory.getInstance().close();
+		}
 
 		return users;
 	}
 
 	@Override
-	public void create(User user)
+	public int create(User user)
 	{	
 		String query = "INSERT INTO User (pseudo, password, firstname, lastname, email, role) VALUES (" +
 				"'" + user.getPseudo() + "', " +
@@ -92,9 +100,11 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 				"'" + user.getFirstname() + "', " +
 				"'" + user.getLastname() + "', " +
 				"'" + user.getEmail() + "', " +
-				"'" + user.getRole() + ", " + "') " ;
+				"'" + user.getRole() + "') " ;
 		
-		executeUpdate(query, "Aucune auteur créé");
+		if(executeUpdate(query, "Aucune auteur créé") != 0)
+			return lastID();
+		return 0;
 	}
 
 	@Override

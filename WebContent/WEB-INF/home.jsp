@@ -1,34 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
 <title>LIMOISSA</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<th>Titre</th>
-			<th>Résumé</th>
-			<th>Auteur(s)</th>
-			<th>Prix</th>
-			<th>Disponibilité</th>
-		</tr>
-		<c:forEach items="${books}" var="book">
-			<tr>
-				<td>${book.title}</td>
-				<td>${book.overview}</td>
-				<td>
-					<c:forEach items="${book.authors}" var="author">
-						<p>${author.lastName} (${author.nativeCountry})</p>
-					</c:forEach>
-				</td>
-				<td>${book.price}</td>
-				<td>${book.availability}</td>
-			</tr>
-		</c:forEach>
-	</table>
+	<c:if test="${actionName != 'home'}">
+		<c:import url="fragments/books.jsp" />
+	</c:if>
 </body>
 </html>

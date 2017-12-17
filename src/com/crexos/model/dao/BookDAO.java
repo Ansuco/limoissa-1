@@ -8,7 +8,7 @@ public interface BookDAO extends InterfaceDAO<Book>
 {
 	Book getById(int id);
 	List<Book> getAll();
-	void create(Book book);
+	int create(Book book);
 	void update(Book book);
 	void delete(int id);
 }

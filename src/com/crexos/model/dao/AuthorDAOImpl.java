@@ -39,6 +39,10 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			DAOFactory.getInstance().close();
+		}
 
 		return author;
 	}
@@ -70,20 +74,28 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		{
 			e.printStackTrace();
 		}
+		finally
+		{
+			DAOFactory.getInstance().close();
+		}
 
 		return authors;
 	}
 
 	@Override
-	public void create(Author author)
+	public int create(Author author)
 	{
 		String query = "INSERT INTO Author (firstname, lastname, native_country) VALUES (" +
 				"'" + author.getFirstName() + "', " +
-				author.getLastName() + ", " +
-				author.getNativeCountry() + ", " + "') " ;
+				"'" + author.getLastName() + "', " +
+				"'" + author.getNativeCountry() + "') " ;
 
-
-		executeUpdate(query, "Aucune auteur créé");
+		int authorID = executeUpdate(query, "Aucune auteur créé");
+		
+		
+		if(authorID != 0)
+			return authorID;
+		return 0;
 	}
 
 	@Override

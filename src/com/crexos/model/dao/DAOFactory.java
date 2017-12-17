@@ -1,58 +1,42 @@
 package com.crexos.model.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 public class DAOFactory
 {
 	private static DAOFactory instance;
 	
 	private Connection cnx = null;
-	private String url;
-	private String user;
-	private String password;
 	
-	private DAOFactory(String url, String user, String password)
-	{
-		this.url = url;
-		this.user = user;
-		this.password = password;
-	}
+	private DAOFactory(){}
 	
 	public static DAOFactory getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new DAOFactory(
-					"jdbc:mariadb://localhost:3307/library",
-					"alexis",
-					"eureka"
-					);
-			
-			try
-			{
-				DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
-			}
-			catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+			instance = new DAOFactory();
 		}
 		return instance;
 	}
 	
 	public Connection getConnection()
 	{
-		try
-		{
-			cnx = DriverManager.getConnection(url, user, password);
+		try {
+			Context ctx = new InitialContext();
+			DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/library");//Utilisation de la JNDI
+			cnx = ds.getConnection();
 		}
-		catch(SQLException e)
+		catch (NamingException|SQLException e)
 		{
 			e.printStackTrace();
 		}
-		
+
 		return cnx;
 	}
 	

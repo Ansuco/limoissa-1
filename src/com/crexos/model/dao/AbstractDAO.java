@@ -25,10 +25,6 @@ public abstract class AbstractDAO
 			System.err.println(exceptionMessage);
 			e.printStackTrace();
 		}
-		finally
-		{
-			DAOFactory.getInstance().close();
-		}
 		
 		return result;
 	}
@@ -42,10 +38,17 @@ public abstract class AbstractDAO
 		{
 			cnx = DAOFactory.getInstance().getConnection();
 			Statement st = cnx.createStatement();
-			result = st.executeUpdate(query);
-			
+			result = st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+			ResultSet resultId = st.getGeneratedKeys(); 
 			if(result == 0)
 				throw new SQLException();
+			else
+			{
+				if(resultId.next())
+				{
+					result = resultId.getInt(1);
+				}
+			}
 		}
 		catch(SQLException e)
 		{
@@ -53,11 +56,32 @@ public abstract class AbstractDAO
 				System.err.println(exceptionMessage);
 			e.printStackTrace();
 		}
-		finally
-		{
-			DAOFactory.getInstance().close();
-		}
 		
 		return result;
+	}
+	
+	public int lastID()
+	{
+		String query = "SELECT LAST_INSERT_ID() as ID;";
+		
+		ResultSet result = executeQuery(query, "LASTID");
+		int lastID = 0;
+		
+		try
+		{
+			if(result.next())
+			{
+				lastID = result.getInt("ID");
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(">>>>>>>>lastID<<<<<<<<<<< " + lastID);
+		
+		
+		return lastID;
 	}
 }
