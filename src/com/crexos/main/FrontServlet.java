@@ -1,18 +1,12 @@
 package com.crexos.main;
 
 import java.io.IOException;
-import java.util.HashSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.crexos.model.beans.Author;
-import com.crexos.model.beans.Book;
-import com.crexos.model.dao.DAOFactory;
-import com.crexos.model.utils.Country;
 
 /**
  * Servlet implementation class FrontServlet
@@ -34,8 +28,7 @@ public class FrontServlet extends HttpServlet
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FrontServlet()
-	{super();}
+	public FrontServlet(){super();}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -78,10 +71,7 @@ public class FrontServlet extends HttpServlet
 		if(!actionName.equals("home"))
 			ActionManager.getAction(actionName).executeAction(request);
 
-
-		//this.getServletContext().setAttribute("books", DAOFactory.getInstance().getBookDAO().getAll());	
 		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
-
 	}
 
 	/**
@@ -92,8 +82,7 @@ public class FrontServlet extends HttpServlet
 		String actionName = getActionName(request);
 		if(!actionName.equals("home"))
 			ActionManager.getAction(actionName).executeAction(request);
-		response.sendRedirect(request.getContextPath()+ "/books");
-
+		response.sendRedirect(request.getContextPath() + "/books");
 	}
 
 	private String getActionName(HttpServletRequest request)

@@ -124,7 +124,6 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	@Override
 	public int create(Book book)
 	{
-		
 		String query = "INSERT INTO Book (title, availability, price, overview) VALUES (" +
 				"'" + book.getTitle() + "', " +
 				book.getAvailability() + ", " +
@@ -177,14 +176,21 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	{
 		String query = "DELETE FROM Book WHERE id=" + id;
 
-		executeUpdate(query, "Aucun livre a été supprimé");
+		if(deleteJoinAuthor(id))
+			executeUpdate(query, "Aucun livre a été supprimé");
 	}
 
 	public boolean joinAuthor(int book, int author)
 	{
-		String query = "INSERT INTO authors_books (author_id, book_id) VALUES (" +
+		String query = "INSERT INTO authors_books (author_id, book_id) VALUES ("
 				+ author + ", " +
 				book + ") " ;
 		return (executeUpdate(query, "Aucune Jointure de livre-auteur créé") == 0 ? false : true);
+	}
+	
+	public boolean deleteJoinAuthor(int book)
+	{
+		String query = "DELETE FROM authors_books WHERE book_id =" + book + "; " ;
+		return (executeUpdate(query, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
 	}
 }

@@ -6,3 +6,10 @@ th, td {
 	border: 1px solid gray;
 	padding : 10px;
 }
+
+
+.hidden_button_style
+{
+	background-color: transparent;
+	border-color: transparent;
+}
