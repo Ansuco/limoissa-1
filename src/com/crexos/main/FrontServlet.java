@@ -51,26 +51,22 @@ public class FrontServlet extends HttpServlet
 		//			e.printStackTrace();
 		//		}
 		//		out.close();	
+		
+//		
+//		if(!actionName.equals("home"))
+//			ActionManager.getAction(actionName).executeAction(request);
 
-
-//		Book book = new Book("Mon livre", "résumé absent", true, 34f, new HashSet<Author>());
-//		
-//		System.out.println("Action AddBook");
-//		
-//		book.getAuthors().add(new Author(
-//				"Alexis",
-//				"Cretinoir",
-//				Country.FRANCE
-//				));
-//
-//		DAOFactory.getInstance().getBookDAO().create(book);
-//		
-//		
 		String actionName = getActionName(request);
-
-		if(!actionName.equals("home"))
-			ActionManager.getAction(actionName).executeAction(request);
-
+		switch(actionName)
+		{
+			case FrontServlet.ACTION_EDIT:
+				ActionManager.getAction(actionName).executeAction(request);
+			break;
+			default:
+				ActionManager.getAction(FrontServlet.ACTION_LIST_BOOKS).executeAction(request);
+		}
+		
+		request.setAttribute("actionName", actionName);
 		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 
@@ -80,9 +76,19 @@ public class FrontServlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String actionName = getActionName(request);
-		if(!actionName.equals("home"))
-			ActionManager.getAction(actionName).executeAction(request);
-		response.sendRedirect(request.getContextPath() + "/books");
+		String page = "/books";
+//		if(!actionName.equals("home"))
+//			ActionManager.getAction(actionName).executeAction(request);
+		
+		switch(actionName)
+		{
+			case FrontServlet.ACTION_EDIT:
+				ActionManager.getAction(actionName).executeAction(request);
+				//page ="/books/edit";
+			break;
+		}
+		
+		response.sendRedirect(request.getContextPath() + page);
 	}
 
 	private String getActionName(HttpServletRequest request)

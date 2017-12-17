@@ -1,4 +1,3 @@
-
 <form method="POST" action="<c:url value='/books/add'/>" id="form-addbook"></form>
 <table>
 	<tr>
@@ -27,7 +26,7 @@
 				<input type="submit" value="&#9998;" class="hidden_button_style" form="form-editbook-${book.id}" /><input type="submit" value="&#10060;" class="hidden_button_style"form="form-deletebook-${book.id}" />
 			</td>
 		</tr>
-		<form method="POST" action="<c:url value='/books/edit'/>" id="form-editbook-${book.id}">
+		<form method="GET" action="<c:url value='/books/edit'/>" id="form-editbook-${book.id}">
 			<input type="hidden" value="${book.id}" name="book-id" form="form-editbook-${book.id}" />
 		</form>
 		<form method="POST" action="<c:url value='/books/delete'/>" id="form-deletebook-${book.id}">	
