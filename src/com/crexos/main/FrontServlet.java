@@ -20,10 +20,7 @@ public class FrontServlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 	private static final String HOME = "/WEB-INF/home.jsp";   
 
-	public static final String ACTION_ADD = "add";
-	public static final String ACTION_DELETE = "delete";
-	public static final String ACTION_EDIT = "edit";
-	public static final String ACTION_LIST_BOOKS = "books";
+
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -59,11 +56,14 @@ public class FrontServlet extends HttpServlet
 		String actionName = getActionName(request);
 		switch(actionName)
 		{
-			case FrontServlet.ACTION_EDIT:
+			case ActionManager.ACTION_EDIT:
+				ActionManager.getAction(actionName).executeAction(request);
+			break;
+			case ActionManager.ACTION_ADD:
 				ActionManager.getAction(actionName).executeAction(request);
 			break;
 			default:
-				ActionManager.getAction(FrontServlet.ACTION_LIST_BOOKS).executeAction(request);
+				ActionManager.getAction(ActionManager.ACTION_LIST_BOOKS).executeAction(request);
 		}
 		
 		request.setAttribute("actionName", actionName);
@@ -82,9 +82,12 @@ public class FrontServlet extends HttpServlet
 		
 		switch(actionName)
 		{
-			case FrontServlet.ACTION_EDIT:
+			case ActionManager.ACTION_EDIT:
 				ActionManager.getAction(actionName).executeAction(request);
 				//page ="/books/edit";
+			break;
+			case ActionManager.ACTION_ADD:
+				ActionManager.getAction(actionName).executeAction(request);
 			break;
 		}
 		

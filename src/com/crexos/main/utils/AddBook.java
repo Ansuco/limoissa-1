@@ -24,6 +24,19 @@ public class AddBook extends AbstractAction
 				));
 		
 		DAOFactory.getInstance().getBookDAO().create(book);
+//		EntityManager em = JpaUtil.getEntityManager();
+//		EntityTransaction transaction = em.getTransaction();
+//		
+//		try
+//		{
+//			transaction.begin();
+//			em.persist(book);
+//			transaction.commit();
+//		}
+//		catch(RollBackException e)
+//		{
+//			transaction.rollback();
+//		}
 	}
 
 }

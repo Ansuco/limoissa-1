@@ -7,8 +7,7 @@
 		<th>Action</th>
 	</tr>
 	<tr>
-		<td><input type="text" name="author-firstname"
-			form="form-addbook" /></td>
+		<td><input type="text" name="author-firstname" form="form-addbook" /></td>
 		<td><input type="text" name="book-title" form="form-addbook" /></td>
 		<td><input type="text" name="book-price" form="form-addbook" /></td>
 		<td><input type="submit" value="Ajouter" form="form-addbook" /></td>

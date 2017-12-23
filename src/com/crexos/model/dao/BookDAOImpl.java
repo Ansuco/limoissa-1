@@ -124,11 +124,15 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	@Override
 	public int create(Book book)
 	{
+		//TODO: Gérer l'injection SQL et compagnie
 		String query = "INSERT INTO Book (title, availability, price, overview) VALUES (" +
 				"'" + book.getTitle() + "', " +
 				book.getAvailability() + ", " +
 				book.getPrice() + ", " +
 				"'" + book.getOverview() + "') " ;
+		
+		System.out.println("Je suis ici 1");
+		
 		
 		int bookID = exist(book);
 		
@@ -146,6 +150,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 					
 					if(DAOFactory.getInstance().getAuthorDAO().getAll().stream().anyMatch(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))))
 					{
+						System.out.println("Je suis ici 2");
 						authorID = DAOFactory.getInstance().getAuthorDAO().getAll().stream().filter(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))).findFirst().get().getId();
 					}
 					else
@@ -167,7 +172,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 				"price = " + book.getPrice() + ", " +
 				"overview = '" + book.getOverview() + "' " +
 				"WHERE id = " + book.getId() + " ";
-
+		
 		executeUpdate(query, "Aucune MAJ livre effectuée");
 	}
 
@@ -185,6 +190,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		String query = "INSERT INTO authors_books (author_id, book_id) VALUES ("
 				+ author + ", " +
 				book + ") " ;
+		System.out.println("Je suis ici 3");
 		return (executeUpdate(query, "Aucune Jointure de livre-auteur créé") == 0 ? false : true);
 	}
 	
