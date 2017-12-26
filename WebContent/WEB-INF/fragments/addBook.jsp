@@ -1,1 +1,1 @@
-${actionName}
+${param.actionName}

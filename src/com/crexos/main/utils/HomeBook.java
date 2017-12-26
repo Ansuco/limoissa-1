@@ -11,7 +11,7 @@ public class HomeBook extends AbstractAction
 	public Redirect executeAction(HttpServletRequest request)
 	{
 		request.setAttribute("title", "Page d'accueil");
-		return new Redirect(true, ActionManager.ACTION_LIST_BOOKS);
+		return new Redirect(false, ActionManager.ACTION_HOME);
 	}
 
 }

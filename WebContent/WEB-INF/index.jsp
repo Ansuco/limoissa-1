@@ -11,17 +11,28 @@
 </head>
 <body>	
 	<c:choose>
+			<c:when test="${!empty user }">
+			<a href="<c:url value='logout'/>">Se déconnecter</a>
+		</c:when>
+		<c:when test="${actionName == 'signin' || actionName == 'login'}">
+			<jsp:include page="fragments/form.jsp">
+				<jsp:param value="${actionName}" name="actionName" />
+			</jsp:include>
+		</c:when>
          <c:when test = "${actionName == 'books'}">
-            <c:import url="fragments/books.jsp" />
+            <jsp:include page="fragments/books.jsp" />
+            <a href="/Limoissa/login">Se connecter</a>
+			<a href="/Limoissa/signin">S'inscricre</a>
          </c:when>
          <c:when test = "${actionName == 'edit'}">
-           <c:import url="fragments/editBook.jsp" />
+           <jsp:include page="fragments/editBook.jsp" />
          </c:when>
          <c:when test = "${actionName == 'add'}">
-           <c:import url="fragments/addBook.jsp" />
+           <jsp:include page="fragments/addBook.jsp" />
          </c:when>
          <c:otherwise>
-            <c:import url="fragments/books.jsp" />
+			<a href="<c:url value='login'/>">Se connecter</a>
+			<a href="<c:url value='signin'/>">S'inscricre</a>
          </c:otherwise>
       </c:choose>
 </body>

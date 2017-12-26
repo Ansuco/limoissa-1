@@ -15,7 +15,7 @@ import com.crexos.model.utils.Redirect;
  */
 @WebServlet(
 		name="FrontServlet",
-		value = {"/home", "/books", "/books/add", "/books/delete", "/books/edit"}
+		value = {"/home", "/books", "/books/add", "/books/delete", "/books/edit", "/signin", "/logout", "/login"}
 		)
 public class FrontServlet extends HttpServlet
 {
@@ -59,8 +59,8 @@ public class FrontServlet extends HttpServlet
 		
 		if(redirect.isRedirection())
 			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
-		else
-			this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
+	
+		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 
 	/**
