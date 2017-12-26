@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
-<title>LIMOISSA</title>
+<title>${title}</title>
 </head>
 <body>	
 	<c:choose>

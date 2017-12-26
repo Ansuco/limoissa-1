@@ -3,12 +3,13 @@ package com.crexos.main.utils;
 import javax.servlet.http.HttpServletRequest;
 
 import com.crexos.model.dao.DAOFactory;
+import com.crexos.model.utils.Redirect;
 
 public class ListBooks extends AbstractAction
 {
 
 	@Override
-	public boolean executeAction(HttpServletRequest request)
+	public Redirect executeAction(HttpServletRequest request)
 	{
 //		EntityManager em = JpaUtil.getEntityManager();
 //		
@@ -18,9 +19,9 @@ public class ListBooks extends AbstractAction
 //		
 		//Voir JPQl
 		
-		
+		request.setAttribute("title", "Catalogue");
 		request.setAttribute("books", DAOFactory.getInstance().getBookDAO().getAll());
 		
-		return true;
+		return new Redirect();
 	}
 }

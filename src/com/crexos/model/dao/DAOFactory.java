@@ -62,7 +62,6 @@ public class DAOFactory
 	        }
 	}
 
-	/* Fermeture silencieuse du statement */
 	private void closeStatement(Statement statement)
 	{
 	        try
@@ -77,21 +76,18 @@ public class DAOFactory
 	        }
 	}
 
-	/* Fermetures silencieuses du statement et de la connexion */
 	public void close(Statement statement)
 	{
 	    closeStatement(statement);
 	    close();
 	}
 	
-	/* Fermetures silencieuses du statement et de la connexion */
 	public void close(ResultSet statement)
 	{
 		closeResultSet(statement);
 	    close();
 	}
 
-	/* Fermetures silencieuses du statement et de la connexion */
 	public void close(ResultSet resultSet, Statement statement)
 	{
 		closeResultSet(resultSet);

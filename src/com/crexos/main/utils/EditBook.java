@@ -4,15 +4,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.crexos.model.beans.Book;
 import com.crexos.model.dao.DAOFactory;
+import com.crexos.model.utils.Redirect;
 
 public class EditBook extends AbstractAction
 {
 
 	@Override
-	public boolean executeAction(HttpServletRequest request)
+	public Redirect executeAction(HttpServletRequest request)
 	{
 		Book book = DAOFactory.getInstance().getBookDAO().getById(Integer.parseInt(request.getParameter("book-id")));
 			
+		request.setAttribute("title", "Editer un livre");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			book.setTitle(request.getParameter("book-title"));
@@ -25,7 +28,7 @@ public class EditBook extends AbstractAction
 		
 		request.setAttribute("book", book);
 		
-		return true;
+		return new Redirect();
 	}
 
 }

@@ -2,7 +2,9 @@ package com.crexos.main.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.crexos.model.utils.Redirect;
+
 public abstract class AbstractAction
 {
-	public abstract boolean executeAction(HttpServletRequest request);
+	public abstract Redirect executeAction(HttpServletRequest request);
 }

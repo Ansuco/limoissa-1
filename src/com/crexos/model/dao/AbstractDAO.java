@@ -112,6 +112,7 @@ public abstract class AbstractDAO
 		return result;
 	}
 	
+	@Deprecated
 	public int lastID()
 	{
 		String query = "SELECT LAST_INSERT_ID() as ID;";

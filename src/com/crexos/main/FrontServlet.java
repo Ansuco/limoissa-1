@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.crexos.model.utils.Redirect;
+
 /**
  * Servlet implementation class FrontServlet
  */
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
-	private static final String HOME = "/WEB-INF/home.jsp";   
+	private static final String HOME = "/WEB-INF/index.jsp";   
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -51,24 +53,14 @@ public class FrontServlet extends HttpServlet
 //		if(!actionName.equals("home"))
 //			ActionManager.getAction(actionName).executeAction(request);
 
-		
-		
-		
 		String actionName = getActionName(request);
-		switch(actionName)
-		{
-			case ActionManager.ACTION_EDIT:
-				ActionManager.getAction(actionName).executeAction(request);
-			break;
-			case ActionManager.ACTION_ADD:
-				ActionManager.getAction(actionName).executeAction(request);
-			break;
-			default:
-				ActionManager.getAction(ActionManager.ACTION_LIST_BOOKS).executeAction(request);
-		}
-		
+		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
 		request.setAttribute("actionName", actionName);
-		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
+		
+		if(redirect.isRedirection())
+			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
+		else
+			this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 
 	/**
@@ -77,13 +69,15 @@ public class FrontServlet extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String actionName = getActionName(request);
-		boolean redirect = ActionManager.getAction(actionName).executeAction(request);
-		request.setAttribute("actionName", actionName);
+		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
 		
-		if(redirect)
-			response.sendRedirect(request.getContextPath() + "/home");
-		else
+		if(redirect.isRedirection())
+		{
+			request.setAttribute("actionName", actionName);
 			response.sendRedirect(request.getContextPath() + "/" + actionName);
+		}
+		else
+			response.sendRedirect(request.getContextPath() + "/home");
 	}
 
 	private String getActionName(HttpServletRequest request)
