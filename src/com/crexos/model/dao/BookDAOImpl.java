@@ -1,5 +1,6 @@
 package com.crexos.model.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +17,11 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	private final String COLUMN_PRICE = "price";
 	private final String COLUMN_OVERVIEW = "overview";
 
-	public BookDAOImpl(){}
+	public BookDAOImpl()
+	{
+		
+		
+	}
 
 	@Override
 	public Book getById(int id)
@@ -166,14 +171,28 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	@Override
 	public void update(Book book)
 	{
-		String query = "UPDATE Book " +
-				"SET title = '" + book.getTitle() + "', " +
-				"availability = " + book.getAvailability() + ", " +
-				"price = " + book.getPrice() + ", " +
-				"overview = '" + book.getOverview() + "' " +
-				"WHERE id = " + book.getId() + " ";
+		String query = "UPDATE Book SET title = ?, availability = ?, price = ?, overview = ? WHERE id = ?";
+		PreparedStatement ps = null;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, book.getTitle());
+			ps.setBoolean(2, book.getAvailability());
+			ps.setFloat(3, book.getPrice());
+			ps.setString(4, book.getOverview());
+			ps.setInt(5, book.getId());
+			ps.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête MAJ livre");
+			e.printStackTrace();
+		}
+			
+		executeUpdate(ps, "Aucune MAJ livre effectuée");
 		
-		executeUpdate(query, "Aucune MAJ livre effectuée");
+		closeProperly(ps);
+		DAOFactory.getInstance().close();
 	}
 
 	@Override

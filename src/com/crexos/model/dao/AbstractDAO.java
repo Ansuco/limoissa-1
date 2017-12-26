@@ -1,6 +1,7 @@
 package com.crexos.model.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,6 +61,35 @@ public abstract class AbstractDAO
 		return result;
 	}
 	
+	public int executeUpdate(PreparedStatement ps, String exceptionMessage)
+	{
+		int result = 0;
+		
+		try
+		{
+			result = ps.executeUpdate();
+			
+			ResultSet resultId = ps.getGeneratedKeys(); 
+			if(result == 0)
+				throw new SQLException();
+			else
+			{
+				if(resultId.next())
+				{
+					result = resultId.getInt(1);
+				}
+			}
+		}
+		catch(SQLException e)
+		{
+			if(result == 0)
+				System.err.println(exceptionMessage);
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 	public int lastID()
 	{
 		String query = "SELECT LAST_INSERT_ID() as ID;";
@@ -83,5 +113,68 @@ public abstract class AbstractDAO
 		
 		
 		return lastID;
+	}
+	
+	
+	/* Fermeture silencieuse du resultset */
+	public void closeProperly(ResultSet resultSet)
+	{
+	    if (resultSet != null)
+	    {
+	        try
+	        {
+	            resultSet.close();
+	        }
+	        catch (SQLException e)
+	        {
+	            System.out.println("Échec de la fermeture du ResultSet : " + e.getMessage());
+	        }
+	    }
+	}
+
+	/* Fermeture silencieuse du statement */
+	public void closeProperly(Statement statement)
+	{
+	    if (statement != null)
+	    {
+	        try
+	        {
+	            statement.close();
+	        }
+	        catch (SQLException e)
+	        {
+	            System.out.println("Échec de la fermeture du Statement : " + e.getMessage());
+	        }
+	    }
+	}
+
+	/* Fermeture silencieuse de la connexion */
+	public void closeProperly(Connection connexion)
+	{
+	    if (connexion != null)
+	    {
+	        try
+	        {
+	            connexion.close();
+	        }
+	        catch (SQLException e)
+	        {
+	            System.out.println("Échec de la fermeture de la connexion : " + e.getMessage());
+	        }
+	    }
+	}
+
+	/* Fermetures silencieuses du statement et de la connexion */
+	public void closeProperly(Statement statement, Connection connexion)
+	{
+	    closeProperly(statement);
+	    closeProperly(connexion);
+	}
+
+	/* Fermetures silencieuses du resultset, du statement et de la connexion */
+	public void fermeturesSilencieuses( ResultSet resultSet, Statement statement, Connection connexion ) {
+	    closeProperly(resultSet);
+	    closeProperly(statement);
+	    closeProperly(connexion);
 	}
 }

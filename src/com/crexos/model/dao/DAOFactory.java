@@ -1,7 +1,9 @@
 package com.crexos.model.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -38,6 +40,11 @@ public class DAOFactory
 		}
 
 		return cnx;
+	}
+	
+	public PreparedStatement getPreparedStatement(String query) throws SQLException
+	{
+		return getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	}
 	
 	public void close()

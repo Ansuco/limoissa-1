@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
+	<Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
 	<Resource driverClassName="com.mysql.jdbc.Driver" 
 			  maxIdle="70" 
 			  maxTotal="100" 
@@ -7,6 +8,6 @@
 			  name="jdbc/library" 
 			  password="eureka" 
 			  type="javax.sql.DataSource" 
-			  url="jdbc:mysql://localhost:3306/library" 
+			  url="jdbc:mysql://localhost:3306/library?useSSL=false" 
 			  username="alexis"/>
 </Context>
