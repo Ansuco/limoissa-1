@@ -9,7 +9,7 @@ public class EditBook extends AbstractAction
 {
 
 	@Override
-	public void executeAction(HttpServletRequest request)
+	public boolean executeAction(HttpServletRequest request)
 	{
 		Book book = DAOFactory.getInstance().getBookDAO().getById(Integer.parseInt(request.getParameter("book-id")));
 			
@@ -24,6 +24,8 @@ public class EditBook extends AbstractAction
 		}
 		
 		request.setAttribute("book", book);
+		
+		return true;
 	}
 
 }

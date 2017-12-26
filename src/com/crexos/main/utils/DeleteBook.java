@@ -7,8 +7,10 @@ import com.crexos.model.dao.DAOFactory;
 public class DeleteBook extends AbstractAction
 {
 	@Override
-	public void executeAction(HttpServletRequest request)
+	public boolean executeAction(HttpServletRequest request)
 	{
-		DAOFactory.getInstance().getBookDAO().delete(Integer.parseInt(request.getParameter("book-id")));	
+		DAOFactory.getInstance().getBookDAO().delete(Integer.parseInt(request.getParameter("book-id")));
+		
+		return true;
 	}
 }

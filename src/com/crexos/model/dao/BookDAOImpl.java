@@ -17,45 +17,47 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	private final String COLUMN_PRICE = "price";
 	private final String COLUMN_OVERVIEW = "overview";
 
-	public BookDAOImpl()
-	{
-		
-		
-	}
+	public BookDAOImpl(){}
 
 	@Override
 	public Book getById(int id)
 	{
+		String query = "SELECT * FROM Book b JOIN Authors_Books ab ON ab.book_id = b.id WHERE id=?";
+	
 		Book book = new Book();
-		String query = "SELECT * FROM Book b JOIN Authors_Books ab ON ab.book_id = b.id WHERE id=" + id;
-
+		PreparedStatement ps = null;
+		ResultSet resultData = null;		
 		try
 		{
-			ResultSet result = executeQuery(query, "Impossible de récupéter un livre par ID");
-
-			while(result.next())
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, id);
+			
+			resultData = executeQuery(ps, "Impossible de récupéter un livre par ID");
+			
+			while(resultData.next())
 			{
-				Author author = DAOFactory.getInstance().getAuthorDAO().getById(result.getInt("author_id"));
+				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
 
-				if(result.isFirst())
+				if(resultData.isFirst())
 				{
-					book.setId(result.getInt(COLUMN_ID));
-					book.setTitle(result.getString(COLUMN_TITLE));
-					book.setAvailability(result.getBoolean(COLUMN_AVAILABILITY));
-					book.setPrice(result.getFloat(COLUMN_PRICE));
-					book.setOverview(result.getString(COLUMN_OVERVIEW));
+					book.setId(resultData.getInt(COLUMN_ID));
+					book.setTitle(resultData.getString(COLUMN_TITLE));
+					book.setAvailability(resultData.getBoolean(COLUMN_AVAILABILITY));
+					book.setPrice(resultData.getFloat(COLUMN_PRICE));
+					book.setOverview(resultData.getString(COLUMN_OVERVIEW));
 				}
 
 				book.addAuthor(author);
 			}
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
+			System.err.println("Impossible de préparer la requête GetById livre");
 			e.printStackTrace();
 		}
 		finally
-		{
-			DAOFactory.getInstance().close();
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 
 		return book;
@@ -63,49 +65,61 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	
 	public int exist(Book book)
 	{
-		String query = "SELECT id FROM Book WHERE title = '" + book.getTitle() + "'";
-		ResultSet result = executeQuery(query, "Impossible de vrifier si un livre existe");
+		String query = "SELECT id FROM Book WHERE title = ?";
 		
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
 		int bookID = 0;
-		
 		try
 		{
-			if(result.next())
-				bookID = result.getInt(1);
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, book.getTitle());
+			
+			resultData = executeQuery(ps, "Impossible de vrifier si un livre existe");
+			
+			if(resultData.next())
+				bookID = resultData.getInt(1);
 		}
 		catch (SQLException e)
 		{
+			System.err.println("Impossible de préparer la requête Exist livre");
 			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 		
 		return bookID;
 	}
 	
-
 	@Override
 	public List<Book> getAll()
 	{
-		List<Book> books = new ArrayList<Book>();
-
 		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id";
-
+		
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		List<Book> books = new ArrayList<Book>();
 		try
-		{			
-			ResultSet result = executeQuery(query, "Impossible de récupéter liste de livre");
+		{	
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			
+			resultData = executeQuery(ps, "Impossible de récupéter liste de livre");
 			Book book = null;
-			while (result.next())
+			while (resultData.next())
 			{
-				int idbook = result.getInt(COLUMN_ID);
-				Author author = DAOFactory.getInstance().getAuthorDAO().getById(result.getInt("author_id"));
+				int idbook = resultData.getInt(COLUMN_ID);
+				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
 
 				if(!books.stream().anyMatch(b -> b.getId() == idbook))
 				{
 					book = new Book();
 					book.setId(idbook);
-					book.setTitle(result.getString(COLUMN_TITLE));
-					book.setAvailability(result.getBoolean(COLUMN_AVAILABILITY));
-					book.setOverview(result.getString(COLUMN_OVERVIEW));
-					book.setPrice(result.getFloat(COLUMN_PRICE));
+					book.setTitle(resultData.getString(COLUMN_TITLE));
+					book.setAvailability(resultData.getBoolean(COLUMN_AVAILABILITY));
+					book.setOverview(resultData.getString(COLUMN_OVERVIEW));
+					book.setPrice(resultData.getFloat(COLUMN_PRICE));
 
 					book.addAuthor(author);
 					books.add(book);
@@ -119,8 +133,8 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			e.printStackTrace();
 		}
 		finally
-		{
-			DAOFactory.getInstance().close();
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 
 		return books;
@@ -129,40 +143,48 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	@Override
 	public int create(Book book)
 	{
-		//TODO: Gérer l'injection SQL et compagnie
-		String query = "INSERT INTO Book (title, availability, price, overview) VALUES (" +
-				"'" + book.getTitle() + "', " +
-				book.getAvailability() + ", " +
-				book.getPrice() + ", " +
-				"'" + book.getOverview() + "') " ;
+		String query = "INSERT INTO Book (title, availability, price, overview) VALUES (?, ?, ?, ?)" ;
 		
-		System.out.println("Je suis ici 1");
-		
-		
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
 		int bookID = exist(book);
-		
-		if(bookID <= 0)
-			bookID = executeUpdate(query, "Aucune livre créé");
-		
-		if(bookID != 0)
-		{
-			if(book.getAuthors().size() > 0)
+		try
+		{	
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, book.getTitle());
+			ps.setBoolean(2, book.getAvailability());
+			ps.setFloat(3, book.getPrice());
+			ps.setString(4, book.getOverview());
+			
+			if(bookID <= 0)
+				bookID = executeUpdate(ps, "Aucune livre créé");
+			
+			if(bookID != 0)
 			{
-				for(Author author : book.getAuthors())
+				if(book.getAuthors().size() > 0)
 				{
-					int authorID;
-					//Vérifie si un auteur n'existe pas dans la BDD avant de le crer, si il existe on récupère son ID pour la jointure avec le livre
-					
-					if(DAOFactory.getInstance().getAuthorDAO().getAll().stream().anyMatch(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))))
+					for(Author author : book.getAuthors())
 					{
-						System.out.println("Je suis ici 2");
-						authorID = DAOFactory.getInstance().getAuthorDAO().getAll().stream().filter(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))).findFirst().get().getId();
+						int authorID;
+						//Vérifie si un auteur n'existe pas dans la BDD avant de le crer, si il existe on récupère son ID pour la jointure avec le livre
+						if(DAOFactory.getInstance().getAuthorDAO().getAll().stream().anyMatch(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))))
+						{
+							authorID = DAOFactory.getInstance().getAuthorDAO().getAll().stream().filter(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))).findFirst().get().getId();
+						}
+						else
+							authorID = DAOFactory.getInstance().getAuthorDAO().create(author);
+						joinAuthor(bookID, authorID);
 					}
-					else
-						authorID = DAOFactory.getInstance().getAuthorDAO().create(author);
-					joinAuthor(bookID, authorID);
 				}
 			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 		
 		return bookID;
@@ -181,41 +203,96 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			ps.setFloat(3, book.getPrice());
 			ps.setString(4, book.getOverview());
 			ps.setInt(5, book.getId());
-			ps.executeUpdate();
+						
+			executeUpdate(ps, "Aucune MAJ livre effectuée");
 		}
 		catch (SQLException e)
 		{
 			System.err.println("Impossible de préparer la requête MAJ livre");
 			e.printStackTrace();
 		}
-			
-		executeUpdate(ps, "Aucune MAJ livre effectuée");
-		
-		closeProperly(ps);
-		DAOFactory.getInstance().close();
+		finally
+		{			
+			DAOFactory.getInstance().close(ps);
+		}
 	}
 
 	@Override
 	public void delete(int id)
 	{
-		String query = "DELETE FROM Book WHERE id=" + id;
-
-		if(deleteJoinAuthor(id))
-			executeUpdate(query, "Aucun livre a été supprimé");
+		String query = "DELETE FROM Book WHERE id=?";
+		
+		PreparedStatement ps = null;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, id);
+			
+			if(deleteJoinAuthor(id))
+				executeUpdate(ps, "Aucun livre a été supprimé");
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Supprimer livre");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(ps);
+		}
 	}
 
 	public boolean joinAuthor(int book, int author)
 	{
-		String query = "INSERT INTO authors_books (author_id, book_id) VALUES ("
-				+ author + ", " +
-				book + ") " ;
-		System.out.println("Je suis ici 3");
-		return (executeUpdate(query, "Aucune Jointure de livre-auteur créé") == 0 ? false : true);
+		String query = "INSERT INTO authors_books (author_id, book_id) VALUES (?, ?)";	
+		
+		PreparedStatement ps = null;
+		boolean result = false;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, author);
+			ps.setInt(2, book);
+			
+			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur créé") == 0 ? false : true);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Ajout jointure auteur_livre");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(ps);
+		}
+		
+		return result;
 	}
 	
 	public boolean deleteJoinAuthor(int book)
 	{
-		String query = "DELETE FROM authors_books WHERE book_id =" + book + "; " ;
-		return (executeUpdate(query, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
+		String query = "DELETE FROM authors_books WHERE book_id =?" ;
+		
+		PreparedStatement ps = null;
+		boolean result = false;
+		
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, book);
+			
+			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Suppression jointure auteur_livre");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(ps);
+		}
+		
+		return result;
 	}
 }

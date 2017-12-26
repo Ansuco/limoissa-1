@@ -13,17 +13,21 @@ public class AddBook extends AbstractAction
 {
 
 	@Override
-	public void executeAction(HttpServletRequest request)
+	public boolean executeAction(HttpServletRequest request)
 	{
-		Book book = new Book(request.getParameter("book-title"), "résumé absent", true, Float.parseFloat(request.getParameter("book-price")), new HashSet<Author>());
-		
-		book.getAuthors().add(new Author(
-				request.getParameter("author-firstname"),
-				"",
-				Country.FRANCE
-				));
-		
-		DAOFactory.getInstance().getBookDAO().create(book);
+		boolean redirect = true;
+		if(request.getMethod().equals("POST"))
+		{
+			Book book = new Book(request.getParameter("book-title"), "résumé absent", true, Float.parseFloat(request.getParameter("book-price")), new HashSet<Author>());
+
+			book.getAuthors().add(new Author(
+					request.getParameter("author-firstname"),
+					"",
+					Country.FRANCE
+					));
+
+			DAOFactory.getInstance().getBookDAO().create(book);
+		}
 //		EntityManager em = JpaUtil.getEntityManager();
 //		EntityTransaction transaction = em.getTransaction();
 //		
@@ -37,6 +41,8 @@ public class AddBook extends AbstractAction
 //		{
 //			transaction.rollback();
 //		}
+		
+		return redirect;
 	}
 
 }

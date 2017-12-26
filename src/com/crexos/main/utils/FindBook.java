@@ -6,10 +6,9 @@ public class FindBook extends AbstractAction
 {
 
 	@Override
-	public void executeAction(HttpServletRequest request)
+	public boolean executeAction(HttpServletRequest request)
 	{
-		// TODO TODO Traitement FIND Book
-		
+		return true;
 	}
 
 }

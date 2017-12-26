@@ -2,6 +2,7 @@ package com.crexos.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -46,16 +47,68 @@ public class DAOFactory
 	{
 		return getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 	}
+		
+	private void closeResultSet(ResultSet resultSet)
+	{
+	        try
+	        {
+	        	if(resultSet != null && !resultSet.isClosed())
+	        		resultSet.close();
+	        }
+	        catch (SQLException e)
+	        {
+	        	System.err.println("Échec de la fermeture du ResultSet : ");
+	            e.printStackTrace();
+	        }
+	}
+
+	/* Fermeture silencieuse du statement */
+	private void closeStatement(Statement statement)
+	{
+	        try
+	        {
+	        	if(statement != null && !statement.isClosed())
+	            statement.close();
+	        }
+	        catch (SQLException e)
+	        {
+	        	System.err.println("Échec de la fermeture du Statement : ");
+	        	e.printStackTrace();
+	        }
+	}
+
+	/* Fermetures silencieuses du statement et de la connexion */
+	public void close(Statement statement)
+	{
+	    closeStatement(statement);
+	    close();
+	}
+	
+	/* Fermetures silencieuses du statement et de la connexion */
+	public void close(ResultSet statement)
+	{
+		closeResultSet(statement);
+	    close();
+	}
+
+	/* Fermetures silencieuses du statement et de la connexion */
+	public void close(ResultSet resultSet, Statement statement)
+	{
+		closeResultSet(resultSet);
+		closeStatement(statement);
+	    close();
+	}
 	
 	public void close()
 	{
 		try
 		{
-			if(cnx != null & !cnx.isClosed())
+			if(cnx != null && !cnx.isClosed())
 				cnx.close();
 		}
 		catch(SQLException e)
 		{
+			System.err.println("Échec de la fermeture de la connexion : ");
 			e.printStackTrace();
 		}
 	}

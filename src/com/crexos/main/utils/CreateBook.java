@@ -6,9 +6,9 @@ public class CreateBook extends AbstractAction
 {
 
 	@Override
-	public void executeAction(HttpServletRequest request) {
-		// TODO TODO Traitement CREATE Book
-		
+	public boolean executeAction(HttpServletRequest request)
+	{
+		return true;
 	}
 
 }

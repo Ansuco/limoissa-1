@@ -8,7 +8,7 @@ public class ListBooks extends AbstractAction
 {
 
 	@Override
-	public void executeAction(HttpServletRequest request)
+	public boolean executeAction(HttpServletRequest request)
 	{
 //		EntityManager em = JpaUtil.getEntityManager();
 //		
@@ -20,5 +20,7 @@ public class ListBooks extends AbstractAction
 		
 		
 		request.setAttribute("books", DAOFactory.getInstance().getBookDAO().getAll());
+		
+		return true;
 	}
 }
