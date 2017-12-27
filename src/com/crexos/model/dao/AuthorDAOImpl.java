@@ -1,5 +1,6 @@
 package com.crexos.model.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,27 +22,33 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 	public Author getById(int id)
 	{
 		Author author = new Author();
-		String query = "SELECT * FROM Author WHERE id=" + id;
+		String query = "SELECT * FROM Author WHERE id=?";
 
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
 		try
 		{
-			ResultSet result = executeQuery(query, "Impossible de récupéter un auteur par ID");
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, id);
 
-			if(result.next())
+			resultData = executeQuery(ps, "Impossible de récupéter un auteur par ID");
+
+			if(resultData != null && resultData.next())
 			{
-				author.setId(result.getInt(COLUMN_ID));
-				author.setFirstname(result.getString(COLUMN_FIRSTNAME));
-				author.setLastName(result.getString(COLUMN_LASTNAME));
-				author.setNativeCountry(Country.valueOf(result.getString(COLUMN_NATIVE_COUNTRY)));
+				author.setId(resultData.getInt(COLUMN_ID));
+				author.setFirstname(resultData.getString(COLUMN_FIRSTNAME));
+				author.setLastName(resultData.getString(COLUMN_LASTNAME));
+				author.setNativeCountry(Country.valueOf(resultData.getString(COLUMN_NATIVE_COUNTRY)));
 			}
 		}
 		catch(SQLException e)
 		{
+			System.err.println("Impossible de préparer la requête getById auteur");
 			e.printStackTrace();
 		}
 		finally
 		{
-			DAOFactory.getInstance().close();
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 
 		return author;
@@ -54,29 +61,35 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 
 		String query = "SELECT * FROM Author";
 
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
 		try
-		{			
-			ResultSet result = executeQuery(query, "Impossible de récupéter liste des auteurs");
-
-			while (result.next())
-			{
-
-				Author author = new Author();
-				author.setId(result.getInt(COLUMN_ID));
-				author.setFirstname(result.getString(COLUMN_FIRSTNAME));
-				author.setLastName(result.getString(COLUMN_LASTNAME));
-				author.setNativeCountry(Country.valueOf(result.getString(COLUMN_NATIVE_COUNTRY)));
-
-				authors.add(author);
-			}
-		}
-		catch (SQLException e)
 		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+
+			resultData = executeQuery(ps, "Impossible de récupéter liste des auteurs");
+
+			if(resultData != null)
+				while (resultData.next())
+				{
+
+					Author author = new Author();
+					author.setId(resultData.getInt(COLUMN_ID));
+					author.setFirstname(resultData.getString(COLUMN_FIRSTNAME));
+					author.setLastName(resultData.getString(COLUMN_LASTNAME));
+					author.setNativeCountry(Country.valueOf(resultData.getString(COLUMN_NATIVE_COUNTRY)));
+
+					authors.add(author);
+				}
+		}
+		catch(SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête getAll auteur");
 			e.printStackTrace();
 		}
 		finally
 		{
-			DAOFactory.getInstance().close();
+			DAOFactory.getInstance().close(resultData, ps);
 		}
 
 		return authors;
@@ -85,36 +98,80 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 	@Override
 	public int create(Author author)
 	{
-		String query = "INSERT INTO Author (firstname, lastname, native_country) VALUES (" +
-				"'" + author.getFirstName() + "', " +
-				"'" + author.getLastName() + "', " +
-				"'" + author.getNativeCountry() + "') " ;
+		String query = "INSERT INTO Author (firstname, lastname, native_country) VALUES (?, ?, ?)";
+		
+		PreparedStatement ps = null;
+		int authorID = 0;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, author.getFirstName());
+			ps.setString(2, author.getLastName());
+			ps.setString(3, "" + author.getNativeCountry());//Astuce poru convertir ENUM en string
+			
+			authorID = executeUpdate(ps, "Aucun auteur ajouté");
+		}
+		catch(SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête create auteur");
+			e.printStackTrace();
+		}
+		finally
+		{
+			DAOFactory.getInstance().close(ps);
+		}
 
-		int authorID = executeUpdate(query, "Aucune auteur créé");
-		
-		
-		if(authorID != 0)
-			return authorID;
-		return 0;
+		return authorID;
 	}
 
 	@Override
 	public void update(Author author)
 	{
-		String query = "UPDATE Author " +
-				"SET firstname = '" + author.getFirstName()+ "', " +
-				"lastname = " + author.getLastName() + ", " +
-				"native_country = " + author.getNativeCountry() + ", " +
-				"WHERE id = " + author.getId() + " ";
-
-		executeUpdate(query, "Aucune MAJ auteur effectuée");
+		String query = "UPDATE Author SET firstname = ?, lastname = ?, native_country = ? WHERE id = ?";
+		
+		PreparedStatement ps = null;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, author.getFirstName());
+			ps.setString(2, author.getLastName());
+			ps.setString(3, "" + author.getNativeCountry());//Astuce poru convertir ENUM en string
+			ps.setInt(4, author.getId());
+			
+			executeUpdate(ps, "Aucune MAJ auteur effectuée");
+		}
+		catch(SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête update auteur");
+			e.printStackTrace();
+		}
+		finally
+		{
+			DAOFactory.getInstance().close(ps);
+		}
 	}
 
 	@Override
 	public void delete(int id)
 	{
-		String query = "DELETE FROM Author WHERE id=" + id;
-		
-		executeUpdate(query, "Aucun auteur a été supprimé");
+		String query = "DELETE FROM Author WHERE id=?";
+
+		PreparedStatement ps = null;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, id);
+			
+			executeUpdate(ps, "Aucun auteur supprimé");
+		}
+		catch(SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête delete auteur");
+			e.printStackTrace();
+		}
+		finally
+		{
+			DAOFactory.getInstance().close(ps);
+		}
 	}
 }
