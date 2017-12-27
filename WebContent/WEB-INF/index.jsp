@@ -23,6 +23,12 @@
          		<c:when test = "${actionName == 'books:add'}">
           			<jsp:include page="fragments/addBook.jsp" />
          		</c:when>
+         		<c:when test = "${actionName == 'authors'}">
+            		<jsp:include page="fragments/authors.jsp" />
+         		</c:when>
+         		<c:when test = "${actionName == 'authors:edit'}">
+            		<jsp:include page="fragments/editAuthor.jsp" />
+         		</c:when>
             </c:choose>
          </c:when>
 		<c:when test="${actionName == 'signin' || actionName == 'login'}">

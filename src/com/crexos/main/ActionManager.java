@@ -5,9 +5,12 @@ import java.util.Map;
 
 import com.crexos.main.utils.AbstractAction;
 import com.crexos.main.utils.AddBook;
+import com.crexos.main.utils.DeleteAuthor;
 import com.crexos.main.utils.DeleteBook;
+import com.crexos.main.utils.EditAuthor;
 import com.crexos.main.utils.EditBook;
 import com.crexos.main.utils.HomeBook;
+import com.crexos.main.utils.ListAuthors;
 import com.crexos.main.utils.ListBooks;
 import com.crexos.main.utils.LoginAction;
 import com.crexos.main.utils.LogoutAction;
@@ -20,6 +23,9 @@ public class ActionManager
 	public static final String ACTION_DELETE_BOOK = "books:delete";
 	public static final String ACTION_EDIT_BOOK = "books:edit";
 	public static final String ACTION_LIST_BOOKS = "books";
+	public static final String ACTION_LIST_AUTHORS = "authors";
+	public static final String ACTION_EDIT_AUTHOR = "authors:edit";
+	public static final String ACTION_DELETE_AUTHOR = "authors:delete";
 	public static final String ACTION_LOGIN = "login";
 	public static final String ACTION_SIGNIN = "signin";
 	public static final String ACTION_LOGOUT = "logout";
@@ -38,6 +44,10 @@ public class ActionManager
 		actions.put(ACTION_LOGIN, new LoginAction());
 		actions.put(ACTION_SIGNIN, new SigninAction());
 		actions.put(ACTION_LOGOUT, new LogoutAction());
+		
+		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
+		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
+		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
 	}
 	
 	public static AbstractAction getAction(String actionName)
