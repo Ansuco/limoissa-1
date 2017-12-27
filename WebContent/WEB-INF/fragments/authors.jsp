@@ -1,3 +1,4 @@
+<a href="<c:url value='/authors/add'/>">Ajouter auteur</a>
 <table>
 	<tr>
 		<th>Prénom</th>

@@ -16,7 +16,7 @@ public class AddBook extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		Redirect redirect = new Redirect(true, "books");
+		Redirect redirect = new Redirect(false, "books:add");
 		
 		request.setAttribute("title", "Ajouter un livre");
 		
@@ -31,6 +31,8 @@ public class AddBook extends AbstractAction
 					));
 
 			DAOFactory.getInstance().getBookDAO().create(book);
+			
+			redirect = new Redirect(true, "books");
 		}
 //		EntityManager em = JpaUtil.getEntityManager();
 //		EntityTransaction transaction = em.getTransaction();

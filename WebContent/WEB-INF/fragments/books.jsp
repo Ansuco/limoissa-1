@@ -1,3 +1,4 @@
+<a href="<c:url value='/books/add'/>">Ajouter livre</a>
 <form method="POST" action="<c:url value='/books/add'/>" id="form-addbook"></form>
 <table>
 	<tr>

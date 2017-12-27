@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.crexos.main.utils.AbstractAction;
+import com.crexos.main.utils.AddAuthor;
 import com.crexos.main.utils.AddBook;
 import com.crexos.main.utils.DeleteAuthor;
 import com.crexos.main.utils.DeleteBook;
@@ -25,6 +26,7 @@ public class ActionManager
 	public static final String ACTION_LIST_BOOKS = "books";
 	public static final String ACTION_LIST_AUTHORS = "authors";
 	public static final String ACTION_EDIT_AUTHOR = "authors:edit";
+	public static final String ACTION_ADD_AUTHOR = "authors:add";
 	public static final String ACTION_DELETE_AUTHOR = "authors:delete";
 	public static final String ACTION_LOGIN = "login";
 	public static final String ACTION_SIGNIN = "signin";
@@ -48,6 +50,7 @@ public class ActionManager
 		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
 		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
 		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
+		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
 	}
 	
 	public static AbstractAction getAction(String actionName)

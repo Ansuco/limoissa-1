@@ -1,7 +1,7 @@
 <form method="POST" action="<c:url value='/authors/edit'/>" id="form-editauthor">
 	<input type="hidden" value="${author.id}" name="author-id" form="form-editauthor" />
-	<input type="text" value="${author.firstName}" name="author-firstName" form="form-editauthor" /><br />
-	<input type="text" value="${author.lastName}" name="author-lastName" form="form-editauthor" /><br />
+	<input type="text" placeholder="Prénom" value="${author.firstName}" name="author-firstName" form="form-editauthor" required  max="70" /><br />
+	<input type="text" placeholder="Nom" value="${author.lastName}" name="author-lastName" form="form-editauthor" required  max="70" /><br />
 	<select name="author-nativeCountry" form="form-editauthor" >
 		<c:forEach var="country" items="${countries}">
 			<c:if test = "${author.nativeCountry == country}">
