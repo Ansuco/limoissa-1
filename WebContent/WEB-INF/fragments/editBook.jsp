@@ -6,3 +6,4 @@
 	<input type="checkbox" <c:if test="${book.availability == true}">checked</c:if> name="book-availability" id="book-availability" form="form-editbook" /><label for="book-availability">disponibilit&eacute;</label><br />
 	<input type="submit" value="Modifier" form="form-editbook" />
 </form>
+<a href="<c:url value='/books'/>">Retour Catalogue</a>

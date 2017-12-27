@@ -55,7 +55,7 @@ public class FrontServlet extends HttpServlet
 
 		String actionName = getActionName(request);
 		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
-		request.setAttribute("actionName", actionName);
+		request.setAttribute("actionName", redirect.getAction());
 		
 		if(redirect.isRedirection())
 			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
@@ -82,7 +82,6 @@ public class FrontServlet extends HttpServlet
 
 	private String getActionName(HttpServletRequest request)
 	{
-		String uri = request.getRequestURI();
-		return request.getRequestURI().substring(uri.lastIndexOf("/")+1);
+		return request.getRequestURI().replaceAll(request.getContextPath(), "").substring(1).replace("/", ":");
 	}
 }

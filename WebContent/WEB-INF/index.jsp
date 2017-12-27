@@ -17,10 +17,10 @@
             	<c:when test = "${actionName == 'books'}">
             		<jsp:include page="fragments/books.jsp" />
          		</c:when>
-         		<c:when test = "${actionName == 'edit'}">
+         		<c:when test = "${actionName == 'books:edit'}">
            			<jsp:include page="fragments/editBook.jsp" />
          		</c:when>
-         		<c:when test = "${actionName == 'add'}">
+         		<c:when test = "${actionName == 'books:add'}">
           			<jsp:include page="fragments/addBook.jsp" />
          		</c:when>
             </c:choose>

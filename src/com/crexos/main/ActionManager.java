@@ -16,9 +16,9 @@ import com.crexos.main.utils.SigninAction;
 public class ActionManager
 {
 	public static final String ACTION_HOME = "home";
-	public static final String ACTION_ADD = "add";
-	public static final String ACTION_DELETE = "delete";
-	public static final String ACTION_EDIT = "edit";
+	public static final String ACTION_ADD_BOOK = "books:add";
+	public static final String ACTION_DELETE_BOOK = "books:delete";
+	public static final String ACTION_EDIT_BOOK = "books:edit";
 	public static final String ACTION_LIST_BOOKS = "books";
 	public static final String ACTION_LOGIN = "login";
 	public static final String ACTION_SIGNIN = "signin";
@@ -30,9 +30,9 @@ public class ActionManager
 		actions = new HashMap<String, AbstractAction>();
 		
 		actions.put(ACTION_HOME, new HomeBook());
-		actions.put(ACTION_ADD, new AddBook());
-		actions.put(ACTION_DELETE, new DeleteBook());
-		actions.put(ACTION_EDIT, new EditBook());
+		actions.put(ACTION_ADD_BOOK, new AddBook());
+		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
+		actions.put(ACTION_EDIT_BOOK, new EditBook());
 		actions.put(ACTION_LIST_BOOKS, new ListBooks());
 		
 		actions.put(ACTION_LOGIN, new LoginAction());

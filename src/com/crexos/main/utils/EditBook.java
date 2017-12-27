@@ -13,7 +13,7 @@ public class EditBook extends AbstractAction
 	public Redirect executeAction(HttpServletRequest request)
 	{
 		Book book = DAOFactory.getInstance().getBookDAO().getById(Integer.parseInt(request.getParameter("book-id")));
-			
+		Redirect redirect = new Redirect(false, "books:edit");
 		request.setAttribute("title", "Editer un livre");
 		
 		if(request.getMethod().equals("POST"))
@@ -24,11 +24,12 @@ public class EditBook extends AbstractAction
 			book.setAvailability((request.getParameter("book-availability") == null ? false: true));
 			
 			DAOFactory.getInstance().getBookDAO().update(book);
+			redirect = new Redirect(true, "books");
 		}
 		
 		request.setAttribute("book", book);
 		
-		return new Redirect();
+		return redirect;
 	}
 
 }

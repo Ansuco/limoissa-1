@@ -16,7 +16,7 @@ public class AddBook extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		Redirect redirect = new Redirect();
+		Redirect redirect = new Redirect(true, "books");
 		
 		request.setAttribute("title", "Ajouter un livre");
 		

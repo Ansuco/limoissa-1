@@ -22,6 +22,6 @@ public class ListBooks extends AbstractAction
 		request.setAttribute("title", "Catalogue");
 		request.setAttribute("books", DAOFactory.getInstance().getBookDAO().getAll());
 		
-		return new Redirect();
+		return new Redirect(false, "books");
 	}
 }
