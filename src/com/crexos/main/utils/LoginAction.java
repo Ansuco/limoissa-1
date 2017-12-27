@@ -14,7 +14,7 @@ public class LoginAction extends AbstractAction
 	{
 		//SecurityConstraint for configure for admin or user role
 		request.setAttribute("title", "Page de connexion");
-		
+		//TODO : encrypter mot de passe en SHA1
 		Redirect redirect = new Redirect(false, "login");
 		if(request.getMethod().equals("POST"))
 		{
@@ -28,11 +28,16 @@ public class LoginAction extends AbstractAction
 				request.getSession().setAttribute("user", user);
 				
 				if(user != null)
+				{
 					redirect = new Redirect(true, "books");
+				}
 				else
+				{
 					redirect = new Redirect(true, "login");
+				}
 			}
 		}
+			
 		return redirect;
 	}
 }

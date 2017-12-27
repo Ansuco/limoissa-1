@@ -59,8 +59,8 @@ public class FrontServlet extends HttpServlet
 		
 		if(redirect.isRedirection())
 			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
-	
-		this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
+		else	
+			this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
 	}
 
 	/**
@@ -73,8 +73,8 @@ public class FrontServlet extends HttpServlet
 		
 		if(redirect.isRedirection())
 		{
-			request.setAttribute("actionName", actionName);
-			response.sendRedirect(request.getContextPath() + "/" + actionName);
+			request.setAttribute("actionName", redirect.getAction());
+			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
 		}
 		else
 			response.sendRedirect(request.getContextPath() + "/home");

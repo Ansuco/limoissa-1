@@ -10,6 +10,8 @@ import com.crexos.main.utils.EditBook;
 import com.crexos.main.utils.HomeBook;
 import com.crexos.main.utils.ListBooks;
 import com.crexos.main.utils.LoginAction;
+import com.crexos.main.utils.LogoutAction;
+import com.crexos.main.utils.SigninAction;
 
 public class ActionManager
 {
@@ -19,6 +21,8 @@ public class ActionManager
 	public static final String ACTION_EDIT = "edit";
 	public static final String ACTION_LIST_BOOKS = "books";
 	public static final String ACTION_LOGIN = "login";
+	public static final String ACTION_SIGNIN = "signin";
+	public static final String ACTION_LOGOUT = "logout";
 	
 	private static Map<String, AbstractAction> actions;
 	static
@@ -32,6 +36,8 @@ public class ActionManager
 		actions.put(ACTION_LIST_BOOKS, new ListBooks());
 		
 		actions.put(ACTION_LOGIN, new LoginAction());
+		actions.put(ACTION_SIGNIN, new SigninAction());
+		actions.put(ACTION_LOGOUT, new LogoutAction());
 	}
 	
 	public static AbstractAction getAction(String actionName)

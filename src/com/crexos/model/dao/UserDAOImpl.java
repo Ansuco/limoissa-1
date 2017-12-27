@@ -138,17 +138,32 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 	@Override
 	public int create(User user)
 	{	
-		String query = "INSERT INTO User (pseudo, password, firstname, lastname, email, role) VALUES (" +
-				"'" + user.getPseudo() + "', " +
-				"'" + user.getPassword() + "', " +
-				"'" + user.getFirstname() + "', " +
-				"'" + user.getLastname() + "', " +
-				"'" + user.getEmail() + "', " +
-				"'" + user.getRole() + "') " ;
+		String query = "INSERT INTO User (pseudo, passwd, firstname, lastname, email) VALUES (?, ?, ?, ?, ?)" ;
 		
-		if(executeUpdate(query, "Aucune auteur créé") != 0)
-			return lastID();
-		return 0;
+		PreparedStatement ps = null;
+		int userId = 0;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, user.getPseudo());
+			ps.setString(2, user.getPassword());
+			ps.setString(3, user.getFirstname());
+			ps.setString(4, user.getLastname());
+			ps.setString(5, user.getEmail());
+			
+			userId = executeUpdate(ps, "Aucun utilisateur créé");
+		}
+		catch(SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête create utilisateur");
+			e.printStackTrace();
+		}
+		finally
+		{
+			DAOFactory.getInstance().close(ps);
+		}
+
+		return userId;
 	}
 
 	@Override

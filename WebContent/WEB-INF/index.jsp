@@ -9,30 +9,30 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
 <title>${title}</title>
 </head>
-<body>	
+<body>
 	<c:choose>
-			<c:when test="${!empty user }">
-			<a href="<c:url value='logout'/>">Se déconnecter</a>
-		</c:when>
+		<c:when test="${!empty user}">
+            <a href="<c:url value='/logout'/>">Se déconnecter</a>
+            <c:choose>
+            	<c:when test = "${actionName == 'books'}">
+            		<jsp:include page="fragments/books.jsp" />
+         		</c:when>
+         		<c:when test = "${actionName == 'edit'}">
+           			<jsp:include page="fragments/editBook.jsp" />
+         		</c:when>
+         		<c:when test = "${actionName == 'add'}">
+          			<jsp:include page="fragments/addBook.jsp" />
+         		</c:when>
+            </c:choose>
+         </c:when>
 		<c:when test="${actionName == 'signin' || actionName == 'login'}">
 			<jsp:include page="fragments/form.jsp">
 				<jsp:param value="${actionName}" name="actionName" />
 			</jsp:include>
 		</c:when>
-         <c:when test = "${actionName == 'books'}">
-            <jsp:include page="fragments/books.jsp" />
-            <a href="/Limoissa/login">Se connecter</a>
-			<a href="/Limoissa/signin">S'inscricre</a>
-         </c:when>
-         <c:when test = "${actionName == 'edit'}">
-           <jsp:include page="fragments/editBook.jsp" />
-         </c:when>
-         <c:when test = "${actionName == 'add'}">
-           <jsp:include page="fragments/addBook.jsp" />
-         </c:when>
          <c:otherwise>
-			<a href="<c:url value='login'/>">Se connecter</a>
-			<a href="<c:url value='signin'/>">S'inscricre</a>
+			<a href="<c:url value='/login'/>">Se connecter</a>
+			<a href="<c:url value='/signin'/>">S'inscricre</a>
          </c:otherwise>
       </c:choose>
 </body>
