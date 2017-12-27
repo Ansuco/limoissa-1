@@ -26,7 +26,7 @@
             </c:choose>
          </c:when>
 		<c:when test="${actionName == 'signin' || actionName == 'login'}">
-			<jsp:include page="fragments/form.jsp">
+			<jsp:include page="fragments/userForm.jsp">
 				<jsp:param value="${actionName}" name="actionName" />
 			</jsp:include>
 		</c:when>
