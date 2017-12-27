@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.crexos.model.beans.User;
+import com.crexos.model.utils.SHA1;
 
 public class UserDAOImpl extends AbstractDAO implements UserDAO
 {	
@@ -67,7 +68,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setString(1, pseudo);
-			ps.setString(2, password);
+			ps.setString(2, SHA1.encryptPassword(password));
 			
 			resultData = executeQuery(ps, "Impossible de récupéter un utilisateur par ID");
 
@@ -146,7 +147,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setString(1, user.getPseudo());
-			ps.setString(2, user.getPassword());
+			ps.setString(2, SHA1.encryptPassword(user.getPassword()));
 			ps.setString(3, user.getFirstname());
 			ps.setString(4, user.getLastname());
 			ps.setString(5, user.getEmail());

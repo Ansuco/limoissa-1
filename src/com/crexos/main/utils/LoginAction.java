@@ -28,13 +28,9 @@ public class LoginAction extends AbstractAction
 				request.getSession().setAttribute("user", user);
 				
 				if(user != null)
-				{
 					redirect = new Redirect(true, "books");
-				}
 				else
-				{
 					redirect = new Redirect(true, "login");
-				}
 			}
 		}
 			
