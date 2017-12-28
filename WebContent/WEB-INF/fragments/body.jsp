@@ -14,6 +14,9 @@
          		<c:when test = "${actionName == 'books:add'}">
           			<jsp:include page="addBook.jsp" />
          		</c:when>
+         		<c:when test = "${actionName == 'books:read'}">
+          			<jsp:include page="readBook.jsp" />
+         		</c:when>
          		<c:when test = "${actionName == 'authors'}">
             		<jsp:include page="authors.jsp" />
          		</c:when>
