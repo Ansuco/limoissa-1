@@ -17,7 +17,7 @@ import com.crexos.model.utils.Redirect;
 		name="FrontServlet",
 		value = {"/home", "/logout", "/login", "/signin", 
 				"/books", "/books/add", "/books/delete", "/books/edit",
-				"/authors", "/authors/edit", "/authors/add", "/authors/delete"}
+				"/authors", "/authors/edit", "/authors/add", "/authors/read", "/authors/delete"}
 		)
 public class FrontServlet extends HttpServlet
 {

@@ -12,9 +12,12 @@
 			<td>${author.lastName}</td>
 			<td>${author.nativeCountry}</td>
 			<td>
-				<input type="submit" value="&#9998;" class="hidden_button_style" form="form-editauthor-${author.id}" /><input type="submit" value="&#10060;" class="hidden_button_style" form="form-deleteauthor-${author.id}" />
+				<input type="submit" value="&#128065;" class="hidden_button_style" form="form-readauthor-${author.id}" /><input type="submit" value="&#9998;" class="hidden_button_style" form="form-editauthor-${author.id}" /><input type="submit" value="&#10060;" class="hidden_button_style" form="form-deleteauthor-${author.id}" />
 			</td>
 		</tr>
+		<form method="GET" action="<c:url value='/authors/read'/>" id="form-readauthor-${author.id}">
+			<input type="hidden" value="${author.id}" name="author-id" form="form-readauthor-${author.id}" />
+		</form>
 		<form method="GET" action="<c:url value='/authors/edit'/>" id="form-editauthor-${author.id}">
 			<input type="hidden" value="${author.id}" name="author-id" form="form-editauthor-${author.id}" />
 		</form>

@@ -15,6 +15,7 @@ import com.crexos.main.utils.ListAuthors;
 import com.crexos.main.utils.ListBooks;
 import com.crexos.main.utils.LoginAction;
 import com.crexos.main.utils.LogoutAction;
+import com.crexos.main.utils.ReadAuthor;
 import com.crexos.main.utils.SigninAction;
 
 public class ActionManager
@@ -28,6 +29,7 @@ public class ActionManager
 	public static final String ACTION_EDIT_AUTHOR = "authors:edit";
 	public static final String ACTION_ADD_AUTHOR = "authors:add";
 	public static final String ACTION_DELETE_AUTHOR = "authors:delete";
+	public static final String ACTION_READ_AUTHOR = "authors:read";
 	public static final String ACTION_LOGIN = "login";
 	public static final String ACTION_SIGNIN = "signin";
 	public static final String ACTION_LOGOUT = "logout";
@@ -51,6 +53,7 @@ public class ActionManager
 		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
 		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
 		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
+		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
 	}
 	
 	public static AbstractAction getAction(String actionName)

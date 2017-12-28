@@ -23,14 +23,12 @@ public class EditAuthor extends AbstractAction
 			author.setNativeCountry(Country.valueOf(request.getParameter("author-nativeCountry")));
 
 			DAOFactory.getInstance().getAuthorDAO().update(author);
-			redirect = new Redirect(true, "authors");
+			redirect = new Redirect(true, "authors/read?author-id=" + author.getId());
 		}
-		
 		
 		request.setAttribute("countries", Country.values());
 		request.setAttribute("author", author);
 		
 		return redirect;
 	}
-
 }

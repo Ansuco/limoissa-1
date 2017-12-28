@@ -15,4 +15,4 @@
 	<br />
 	<input type="submit" value="Modifier" form="form-editauthor" />
 </form>
-<a href="<c:url value='/authors'/>">Retour Catalogue auteur</a>
+<a href="<c:url value='/authors/read?author-id=${author.id}'/>">Retour</a>

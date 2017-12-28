@@ -23,6 +23,9 @@
          		<c:when test = "${actionName == 'authors:add'}">
             		<jsp:include page="addAuthor.jsp" />
          		</c:when>
+         		<c:when test = "${actionName == 'authors:read'}">
+            		<jsp:include page="readAuthor.jsp" />
+         		</c:when>
             </c:choose>
          </c:when>
 		<c:when test="${actionName == 'signin' || actionName == 'login'}">
@@ -30,5 +33,12 @@
 				<jsp:param value="${actionName}" name="actionName" />
 			</jsp:include>
 		</c:when>
+		<c:otherwise>
+			<section>
+				<article>
+					TP Limoissa résumé...
+				</article>
+			</section>
+		</c:otherwise>
 	</c:choose>
 </div>
