@@ -16,4 +16,13 @@ Auteur(s) :
 		</form>
 	</c:forEach>
 
+<form method="POST" action="<c:url value='/books/addauthors'/>" id="form-book-add-authors">
+	<select name="book-add-authors" multiple form="form-book-add-authors">
+		<c:forEach items="${authors}" var="author" >
+			<option value="${author.id}#${book.id}">${author.firstName} ${author.lastName}</option>
+		</c:forEach>
+	</select>
+	<input type="submit" value="Ajouter auteur(s) existant(s)" form="form-book-add-authors" />	
+</form>
+
 <a href="<c:url value='/books/read?book-id=${book.id}'/>">Retour</a>

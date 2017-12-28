@@ -93,6 +93,37 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return bookID;
 	}
 	
+	public boolean existJoin(int bookId, int authorId)
+	{
+		String query = "SELECT * FROM authors_books WHERE author_id = ? AND book_id = ?";
+		
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		boolean exist = false;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, authorId);
+			ps.setInt(2, bookId);
+			
+			resultData = executeQuery(ps, "Impossible de vérifier si une jointure auteur livre existe");
+			
+			if(resultData.next())
+				exist = true;
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Exist Jointure auteur livre");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
+		}
+		
+		return exist;
+	}
+	
 	@Override
 	public List<Book> getAll()
 	{

@@ -27,6 +27,7 @@ public class EditBook extends AbstractAction
 		}
 		
 		request.setAttribute("book", book);
+		request.setAttribute("authors", DAOFactory.getInstance().getAuthorDAO().getAll());
 		
 		return redirect;
 	}
