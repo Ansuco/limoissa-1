@@ -8,7 +8,6 @@ import com.crexos.model.utils.Redirect;
 
 public class EditBook extends AbstractAction
 {
-
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
@@ -31,5 +30,4 @@ public class EditBook extends AbstractAction
 		
 		return redirect;
 	}
-
 }

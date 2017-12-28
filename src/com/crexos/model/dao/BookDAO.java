@@ -11,4 +11,5 @@ public interface BookDAO extends InterfaceDAO<Book>
 	int create(Book book);
 	void update(Book book);
 	void delete(int id);
+	boolean deleteJoinAuthorBook(int authorId, int bookId);
 }

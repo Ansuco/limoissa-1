@@ -295,4 +295,32 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		
 		return result;
 	}
+	
+	public boolean deleteJoinAuthorBook(int authorId, int bookId)
+	{
+		String query = "DELETE FROM authors_books WHERE author_id =? AND book_id =?" ;
+		
+		PreparedStatement ps = null;
+		boolean result = false;
+		
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, authorId);
+			ps.setInt(2, bookId);
+			
+			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Suppression jointure auteur_livre");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(ps);
+		}
+		
+		return result;
+	}
 }

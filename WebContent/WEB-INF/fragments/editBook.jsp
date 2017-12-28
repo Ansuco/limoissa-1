@@ -7,4 +7,13 @@
 	<input type="checkbox" <c:if test="${book.availability == true}">checked</c:if> name="book-availability" id="book-availability" form="form-editbook" /><label for="book-availability">En stock</label><br />
 	<input type="submit" value="Modifier" form="form-editbook" />
 </form>
+Auteur(s) : 
+	<c:forEach items="${book.authors}" var="author" varStatus="loop">
+		${author.firstName.trim()} ${author.lastName.trim()}<input type="submit" value="&#10060;" class="hidden_button_style" form="form-deletjoineauthor-${author.id}" /><c:if test="${!loop.last}">,</c:if>
+		<form method="POST" action="<c:url value='/books/deletejoin'/>" id="form-deletjoineauthor-${author.id}">	
+			<input type="hidden" value="${author.id}" name="author-id" form="form-deletjoineauthor-${author.id}" />
+			<input type="hidden" value="${book.id}" name="book-id" form="form-deletjoineauthor-${author.id}" />
+		</form>
+	</c:forEach>
+
 <a href="<c:url value='/books/read?book-id=${book.id}'/>">Retour</a>
