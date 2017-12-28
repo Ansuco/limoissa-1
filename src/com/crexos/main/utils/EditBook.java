@@ -24,7 +24,7 @@ public class EditBook extends AbstractAction
 			book.setAvailability((request.getParameter("book-availability") == null ? false: true));
 			
 			DAOFactory.getInstance().getBookDAO().update(book);
-			redirect = new Redirect(true, "books");
+			redirect = new Redirect(true, "books/read?book-id=" + book.getId());
 		}
 		
 		request.setAttribute("book", book);
