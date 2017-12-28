@@ -9,7 +9,7 @@
 </form>
 Auteur(s) : 
 	<c:forEach items="${book.authors}" var="author" varStatus="loop">
-		${author.firstName.trim()} ${author.lastName.trim()}<input type="submit" value="&#10060;" class="hidden_button_style" form="form-deletjoineauthor-${author.id}" /><c:if test="${!loop.last}">,</c:if>
+		${author.firstName} ${author.lastName}<input type="submit" value="&#10060;" class="hidden_button_style" form="form-deletjoineauthor-${author.id}" /><c:if test="${!loop.last}">,</c:if>
 		<form method="POST" action="<c:url value='/books/deletejoin'/>" id="form-deletjoineauthor-${author.id}">	
 			<input type="hidden" value="${author.id}" name="author-id" form="form-deletjoineauthor-${author.id}" />
 			<input type="hidden" value="${book.id}" name="book-id" form="form-deletjoineauthor-${author.id}" />

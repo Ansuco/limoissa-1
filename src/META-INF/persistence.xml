@@ -5,7 +5,7 @@
 
 		<properties>
 			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/dbtest"/>
-			<property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
 			<property name="hibernate.show_sql" value="true"/>
 		</properties>
 	</persistence-unit>
