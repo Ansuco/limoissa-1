@@ -84,6 +84,12 @@ public class FrontServlet extends HttpServlet
 
 	private String getActionName(HttpServletRequest request)
 	{
-		return request.getRequestURI().replaceAll(request.getContextPath(), "").substring(1).replace("/", ":");
+		return removeJsessionidRewriteURL(request.getRequestURI().replaceAll(request.getContextPath(), "").substring(1).replace("/", ":"));
+	}
+	
+	private String removeJsessionidRewriteURL(String str)
+	{
+		//On retire cette instruction de session dans l'URL lorsqu'on retourne l'action ;jsessionid=4B701A9A89D5E071D712B45C3BC8B9DB
+		return str.replace(";jsessionid=.*", "");
 	}
 }

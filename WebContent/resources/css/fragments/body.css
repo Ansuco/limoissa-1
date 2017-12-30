@@ -20,3 +20,7 @@ form[name="login"] {
 form[name="books"] {
 	text-align:center;
 }
+
+.forminline {	
+	display:inline;
+}

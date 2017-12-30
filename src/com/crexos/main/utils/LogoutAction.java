@@ -9,8 +9,7 @@ public class LogoutAction extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		request.getSession().setAttribute("user", null);
-		
+		request.getSession().invalidate();
 		return new Redirect(true, "home");
 	}
 

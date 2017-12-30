@@ -4,8 +4,7 @@
 <c:choose>
 	<c:when test="${!empty user}">
 		<c:out value="Bonjour ${user.pseudo}"/>&nbsp;&nbsp;
-		<a href="<c:url value='/logout'/>">Se déconnecter</a>
-		<br />
+		<a href="<c:url value='/logout'/>">Se déconnecter</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<ul>
 			<li><a href="<c:url value='/books'/>">Catalogue livre</a></li>
 			<li><a href="<c:url value='/authors'/>">Catalogue auteur</a></li>
@@ -13,6 +12,6 @@
 	</c:when>
 	<c:otherwise>
 		<a href="<c:url value='/login'/>">Se connecter</a>&nbsp;&nbsp;
-		<a href="<c:url value='/signin'/>">S'inscricre</a>
+		<a href="<c:url value='/signin'/>">S'inscricre</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</c:otherwise>
 </c:choose>
