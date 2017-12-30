@@ -14,8 +14,11 @@ public class DeleteJoinAuthorBook extends AbstractAction
 		String authorId = request.getParameter("author-id");
 		String bookId = request.getParameter("book-id");
 
-		((BookDAO)DAOFactory.getInstance().getBookDAO()).deleteJoinAuthorBook(Integer.parseInt(authorId), Integer.parseInt(bookId));
-		
+		if(request.getMethod().equals("POST"))
+		{
+			((BookDAO)DAOFactory.getInstance().getBookDAO()).deleteJoinAuthorBook(Integer.parseInt(authorId), Integer.parseInt(bookId));
+		}
+
 		return new Redirect(true,"books/edit?book-id=" + Integer.parseInt(bookId));
 	}
 }

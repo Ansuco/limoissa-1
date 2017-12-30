@@ -6,8 +6,8 @@
 		<c:out value="Bonjour ${user.pseudo}"/>&nbsp;&nbsp;
 		<a href="<c:url value='/logout'/>">Se déconnecter</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<ul>
-			<li><a href="<c:url value='/books'/>">Catalogue livre</a></li>
-			<li><a href="<c:url value='/authors'/>">Catalogue auteur</a></li>
+			<li><a href="<c:url value='/books'/>">Catalogue Livre</a></li>
+			<li><a href="<c:url value='/authors'/>">Catalogue Auteur</a></li>
 		</ul>
 	</c:when>
 	<c:otherwise>

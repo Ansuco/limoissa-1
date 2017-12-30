@@ -10,8 +10,10 @@ public class DeleteBook extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		DAOFactory.getInstance().getBookDAO().delete(Integer.parseInt(request.getParameter("book-id")));
-		
+		if(request.getMethod().equals("POST"))
+		{
+			DAOFactory.getInstance().getBookDAO().delete(Integer.parseInt(request.getParameter("book-id")));
+		}
 		return new Redirect(true, "books");
 	}
 }

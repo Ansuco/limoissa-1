@@ -11,8 +11,10 @@ public class DeleteAuthor extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		DAOFactory.getInstance().getAuthorDAO().delete(Integer.parseInt(request.getParameter("author-id")));
-		
+		if(request.getMethod().equals("POST"))
+		{
+			DAOFactory.getInstance().getAuthorDAO().delete(Integer.parseInt(request.getParameter("author-id")));
+		}
 		return new Redirect(true, "authors");
 	}
 
