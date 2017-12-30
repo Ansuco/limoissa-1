@@ -1,18 +1,11 @@
 <a href="<c:url value='/books/add'/>">Ajouter livre</a>
 <section>
-<form method="POST" action="<c:url value='/books/add'/>" id="form-addbook"></form>
 <table id="books">
 	<tr>
 		<th>Auteur(s)</th>
 		<th>Titre</th>
 		<th>Prix</th>
 		<th>Action</th>
-	</tr>
-	<tr>
-		<td><input type="text" name="author-firstname" form="form-addbook" /></td>
-		<td><input type="text" name="book-title" form="form-addbook" /></td>
-		<td><input type="text" name="book-price" form="form-addbook" /></td>
-		<td><input type="submit" value="Ajouter" form="form-addbook" /></td>
 	</tr>
 	<c:forEach items="${books}" var="book">
 		<tr>
