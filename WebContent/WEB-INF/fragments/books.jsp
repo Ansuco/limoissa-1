@@ -1,6 +1,7 @@
 <a href="<c:url value='/books/add'/>">Ajouter livre</a>
+<section>
 <form method="POST" action="<c:url value='/books/add'/>" id="form-addbook"></form>
-<table>
+<table id="books">
 	<tr>
 		<th>Auteur(s)</th>
 		<th>Titre</th>
@@ -37,3 +38,4 @@
 		</form>
 	</c:forEach>
 </table>
+</section>

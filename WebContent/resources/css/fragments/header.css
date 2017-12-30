@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
 #logo {
-	float : left;
-	overflow:hidden;
-    -webkit-border-radius:50px;
-    -moz-border-radius:50px;
-    border-radius:50px;
-    width:90px;
-    height:90px;
+	
 }
-
+header {
+	display:flex;
+	flex-flow: row warp;
+	justify-content: space-between;
+}
+#logo {
+	border-radius: 1em;
+}
+#menu {
+	
+}
 nav {
 	display : flex;
 	font-family: 'Pacifico', cursive;
@@ -16,4 +20,7 @@ nav {
 
 nav div {
 	float : right;
+}
+#login {
+	text-align:center;
 }

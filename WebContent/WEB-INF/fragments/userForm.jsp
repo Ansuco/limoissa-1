@@ -1,4 +1,5 @@
-<form action="<c:url value='${param.actionName}'/>" method="POST">
+<section id="login">
+<form action="<c:url value='${param.actionName}'/>" method="POST" name="login">
 	<c:if test="${param.actionName == 'signin'}">
 		<input type="text" name="firstname" placeholder="Prénom" max="90" required />
 		<br />
@@ -15,4 +16,6 @@
 	<input type="submit" value="Envoyer" />
 </form>
 
+
+</section>
 <a href="<c:url value='/home'/>">Retour à l'accueil</a>
