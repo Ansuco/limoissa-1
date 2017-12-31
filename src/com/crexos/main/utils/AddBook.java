@@ -1,7 +1,7 @@
 package com.crexos.main.utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,21 +25,21 @@ public class AddBook extends AbstractAction
 		{
 			if(request.getParameter("mode") != null && request.getParameter("mode").equals("tmpauthors"))
 			{
-				Set<Author> tmpauthors = null;
+				List<Author> tmpauthors = null;
 				if(request.getSession().getAttribute("tmpauthorsforbook") == null)
 				{
-					tmpauthors = new HashSet<Author>();
+					tmpauthors = new ArrayList<Author>();
 					request.getSession().setAttribute("tmpauthorsforbook", tmpauthors);
 				}
 				else
 				{
 					try
 					{					
-						tmpauthors = (Set<Author>)request.getSession().getAttribute("tmpauthorsforbook");
+						tmpauthors = (List<Author>)request.getSession().getAttribute("tmpauthorsforbook");
 					}
 					catch(ClassCastException e)
 					{
-						tmpauthors = new HashSet<Author>();
+						tmpauthors = new ArrayList<Author>();
 						request.getSession().setAttribute("tmpauthorsforbook", tmpauthors);
 					}
 				}
@@ -57,7 +57,7 @@ public class AddBook extends AbstractAction
 			else
 			{
 				Book book = new Book(request.getParameter("book-title"), "résumé absent", true, Float.parseFloat(request.getParameter("book-price")), 
-						(request.getSession().getAttribute("tmpauthorsforbook") == null ? new HashSet<Author>(): (Set<Author>)request.getSession().getAttribute("tmpauthorsforbook"))
+						(request.getSession().getAttribute("tmpauthorsforbook") == null ? new ArrayList<Author>(): (List<Author>)request.getSession().getAttribute("tmpauthorsforbook"))
 						);
 
 

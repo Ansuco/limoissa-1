@@ -1,7 +1,7 @@
 package com.crexos.model.beans;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Book
 {
@@ -10,20 +10,20 @@ public class Book
 	private String overview;
 	private boolean availability;
 	private float price;
-	private Set<Author> authors;
+	private List<Author> authors;
 	
 	public Book()
 	{
-		this.setAuthors(new HashSet<Author>());
+		this.setAuthors(new ArrayList<Author>());
 	}
 	
-	public Book(int id, String title, String overview, boolean availability, float price, Set<Author> authors)
+	public Book(int id, String title, String overview, boolean availability, float price, List<Author> authors)
 	{
 		this(title, overview, availability, price, authors);
 		this.setId(id);
 	}
 	
-	public Book(String title, String overview, boolean availability, float price, Set<Author> authors)
+	public Book(String title, String overview, boolean availability, float price, List<Author> authors)
 	{
 		this();
 		this.setTitle(title);
@@ -73,12 +73,12 @@ public class Book
 		this.price = price;
 	}
 
-	public Set<Author> getAuthors()
+	public List<Author> getAuthors()
 	{
 		return authors;
 	}
 
-	public void setAuthors(Set<Author> authors)
+	public void setAuthors(List<Author> authors)
 	{
 		this.authors = authors;
 	}
