@@ -8,6 +8,7 @@ public interface BookDAO extends InterfaceDAO<Book>
 {
 	Book getById(int id);
 	List<Book> getAll();
+	List<Book> getAllSortedBy(String column, String mode);
 	int create(Book book);
 	void update(Book book);
 	void delete(int id);

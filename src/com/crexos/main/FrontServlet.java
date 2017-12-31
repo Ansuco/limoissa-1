@@ -58,7 +58,7 @@ public class FrontServlet extends HttpServlet
 		String actionName = getActionName(request);
 		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
 		request.setAttribute("actionName", redirect.getAction());
-		
+
 		if(redirect.isRedirection())
 			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
 		else	
@@ -72,14 +72,16 @@ public class FrontServlet extends HttpServlet
 	{
 		String actionName = getActionName(request);
 		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
-		
+
 		if(redirect.isRedirection())
 		{
 			request.setAttribute("actionName", redirect.getAction());
 			response.sendRedirect(request.getContextPath() + "/" + redirect.getAction());
 		}
 		else
-			response.sendRedirect(request.getContextPath() + "/home");
+		{
+			this.getServletContext().getRequestDispatcher(HOME).forward(request, response);
+		}
 	}
 
 	private String getActionName(HttpServletRequest request)

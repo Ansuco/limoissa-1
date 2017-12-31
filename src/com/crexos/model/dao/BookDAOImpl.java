@@ -23,7 +23,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	public Book getById(int id)
 	{
 		String query = "SELECT * FROM Book b JOIN Authors_Books ab ON ab.book_id = b.id WHERE id=?";
-	
+
 		Book book = new Book();
 		PreparedStatement ps = null;
 		ResultSet resultData = null;		
@@ -31,9 +31,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, id);
-			
+
 			resultData = executeQuery(ps, "Impossible de récupéter un livre par ID");
-			
+
 			while(resultData.next())
 			{
 				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
@@ -62,11 +62,11 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 
 		return book;
 	}
-	
+
 	public int exist(Book book)
 	{
 		String query = "SELECT id FROM Book WHERE title = ?";
-		
+
 		PreparedStatement ps = null;
 		ResultSet resultData = null;
 		int bookID = 0;
@@ -74,9 +74,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setString(1, book.getTitle());
-			
+
 			resultData = executeQuery(ps, "Impossible de vrifier si un livre existe");
-			
+
 			if(resultData.next())
 				bookID = resultData.getInt(1);
 		}
@@ -89,14 +89,14 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(resultData, ps);
 		}
-		
+
 		return bookID;
 	}
-	
+
 	public boolean existJoin(int bookId, int authorId)
 	{
 		String query = "SELECT * FROM authors_books WHERE author_id = ? AND book_id = ?";
-		
+
 		PreparedStatement ps = null;
 		ResultSet resultData = null;
 		boolean exist = false;
@@ -105,9 +105,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, authorId);
 			ps.setInt(2, bookId);
-			
+
 			resultData = executeQuery(ps, "Impossible de vérifier si une jointure auteur livre existe");
-			
+
 			if(resultData.next())
 				exist = true;
 		}
@@ -120,22 +120,85 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(resultData, ps);
 		}
-		
+
 		return exist;
 	}
-	
+
 	@Override
 	public List<Book> getAll()
 	{
 		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id";
-		
+
 		PreparedStatement ps = null;
 		ResultSet resultData = null;
 		List<Book> books = new ArrayList<Book>();
 		try
 		{	
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
-			
+
+			resultData = executeQuery(ps, "Impossible de récupéter liste de livre");
+			Book book = null;
+			while (resultData.next())
+			{
+				int idbook = resultData.getInt(COLUMN_ID);
+				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
+
+				if(!books.stream().anyMatch(b -> b.getId() == idbook))
+				{
+					book = new Book();
+					book.setId(idbook);
+					book.setTitle(resultData.getString(COLUMN_TITLE));
+					book.setAvailability(resultData.getBoolean(COLUMN_AVAILABILITY));
+					book.setOverview(resultData.getString(COLUMN_OVERVIEW));
+					book.setPrice(resultData.getFloat(COLUMN_PRICE));
+
+					book.addAuthor(author);
+					books.add(book);
+				}
+				else
+					books.stream().filter(b -> b.getId() == idbook).findFirst().get().addAuthor(author);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
+		}
+
+		return books;
+	}
+
+	@Override
+	public List<Book> getAllSortedBy(String column, String mode)
+	{
+		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id";
+
+		if(mode.toUpperCase().equals("ASC") || mode.toUpperCase().equals("DESC"))
+		{
+			switch(column)
+			{
+			case COLUMN_TITLE:
+				query += " ORDER BY " + column + " " + mode.toUpperCase();
+				break;
+			case COLUMN_PRICE:
+				query += " ORDER BY " + column + " " + mode.toUpperCase();
+				break;
+			case COLUMN_AVAILABILITY:
+				query += " ORDER BY " + column + " " + mode.toUpperCase();
+				break;
+			}
+		}
+
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		List<Book> books = new ArrayList<Book>();
+		try
+		{	
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+
 			resultData = executeQuery(ps, "Impossible de récupéter liste de livre");
 			Book book = null;
 			while (resultData.next())
@@ -175,7 +238,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	public int create(Book book)
 	{
 		String query = "INSERT INTO Book (title, availability, price, overview) VALUES (?, ?, ?, ?)" ;
-		
+
 		PreparedStatement ps = null;
 		ResultSet resultData = null;
 		int bookID = exist(book);
@@ -186,10 +249,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			ps.setBoolean(2, book.getAvailability());
 			ps.setFloat(3, book.getPrice());
 			ps.setString(4, book.getOverview());
-			
+
 			if(bookID <= 0)
 				bookID = executeUpdate(ps, "Aucune livre créé");
-			
+
 			if(bookID != 0)
 			{
 				if(book.getAuthors().size() > 0)
@@ -217,7 +280,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(resultData, ps);
 		}
-		
+
 		return bookID;
 	}
 
@@ -234,7 +297,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			ps.setFloat(3, book.getPrice());
 			ps.setString(4, book.getOverview());
 			ps.setInt(5, book.getId());
-						
+
 			executeUpdate(ps, "Aucune MAJ livre effectuée");
 		}
 		catch (SQLException e)
@@ -252,13 +315,13 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	public void delete(int id)
 	{
 		String query = "DELETE FROM Book WHERE id=?";
-		
+
 		PreparedStatement ps = null;
 		try
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, id);
-			
+
 			if(deleteJoinAuthor(id))
 				executeUpdate(ps, "Aucun livre a été supprimé");
 		}
@@ -276,7 +339,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	public boolean joinAuthor(int book, int author)
 	{
 		String query = "INSERT INTO authors_books (author_id, book_id) VALUES (?, ?)";	
-		
+
 		PreparedStatement ps = null;
 		boolean result = false;
 		try
@@ -284,7 +347,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, author);
 			ps.setInt(2, book);
-			
+
 			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur créé") == 0 ? false : true);
 		}
 		catch (SQLException e)
@@ -296,22 +359,22 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(ps);
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean deleteJoinAuthor(int book)
 	{
 		String query = "DELETE FROM authors_books WHERE book_id =?" ;
-		
+
 		PreparedStatement ps = null;
 		boolean result = false;
-		
+
 		try
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, book);
-			
+
 			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
 		}
 		catch (SQLException e)
@@ -323,23 +386,23 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(ps);
 		}
-		
+
 		return result;
 	}
-	
+
 	public boolean deleteJoinAuthorBook(int authorId, int bookId)
 	{
 		String query = "DELETE FROM authors_books WHERE author_id =? AND book_id =?" ;
-		
+
 		PreparedStatement ps = null;
 		boolean result = false;
-		
+
 		try
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
 			ps.setInt(1, authorId);
 			ps.setInt(2, bookId);
-			
+
 			result = (executeUpdate(ps, "Aucune Jointure de livre-auteur supprimé") == 0 ? false : true);
 		}
 		catch (SQLException e)
@@ -351,7 +414,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		{			
 			DAOFactory.getInstance().close(ps);
 		}
-		
+
 		return result;
 	}
 }
