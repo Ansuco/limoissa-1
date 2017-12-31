@@ -1,5 +1,5 @@
 <a href="<c:url value='/books/add'/>">Ajouter livre</a>
-<section>
+<section id="show">
 <table id="books">
 	<tr>
 		<th>Auteur(s)</th>
@@ -17,7 +17,7 @@
 			<td>${book.title}</td>
 			<td>${book.price}</td>
 			<td>
-				<input type="submit" value="&#128065;" class="hidden_button_style" form="form-readbook-${book.id}" /><input type="submit" value="&#9998;" class="hidden_button_style" form="form-editbook-${book.id}" /><input type="submit" value="&#10060;" class="hidden_button_style"form="form-deletebook-${book.id}" />
+				<input type="submit" title="Afficher" value="&#128065;" class="hidden_button_style" form="form-readbook-${book.id}" /><input type="submit" value="&#9998;" title="Editer" class="hidden_button_style" form="form-editbook-${book.id}" /><input type="submit" title="Supprimer" value="&#10060;" class="hidden_button_style"form="form-deletebook-${book.id}" />
 			</td>
 		</tr>
 		<form method="GET" action="<c:url value='/books/read'/>" id="form-readbook-${book.id}">

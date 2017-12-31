@@ -11,7 +11,7 @@
 		</ul>
 	</c:when>
 	<c:otherwise>
-		<a href="<c:url value='/login'/>">Se connecter</a>&nbsp;&nbsp;
+		<a href="<c:url value='/login'/>">Se connecter</a>&nbsp;&nbsp;|&nbsp;
 		<a href="<c:url value='/signin'/>">S'inscricre</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</c:otherwise>
 </c:choose>

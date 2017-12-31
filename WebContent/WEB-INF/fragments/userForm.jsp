@@ -15,7 +15,5 @@
 	<br />
 	<input type="submit" value="Envoyer" />
 </form>
-
-
 </section>
 <a href="<c:url value='/home'/>">Retour à l'accueil</a>

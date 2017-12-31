@@ -8,5 +8,5 @@
 	</c:forEach>
 </p>
 <br />
-<a href="<c:url value='/books/edit?book-id=${book.id}'/>">Editer</a>
+<a href="<c:url value='/books/edit?book-id=${book.id}'/>">Editer</a>&nbsp;&nbsp;|&nbsp;
 <a href="<c:url value='/books'/>">Retour Catalogue livre</a>

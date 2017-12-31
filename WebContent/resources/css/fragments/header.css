@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico');
-#logo {
-	
+#projectname {
+	font-family: Pacifico;
+	font-size: 54px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
 }
+
 header {
 	display:flex;
 	flex-flow: row warp;
