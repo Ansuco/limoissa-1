@@ -5,6 +5,9 @@
 	<c:choose>
 		<c:when test="${!empty user}">
             <c:choose>
+            	<c:when test = "${actionName == 'catalog'}">
+            		<jsp:include page="catalog.jsp" />
+         		</c:when>
             	<c:when test = "${actionName == 'books'}">
             		<jsp:include page="books.jsp" />
          		</c:when>

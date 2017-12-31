@@ -32,3 +32,4 @@
 	</c:forEach>
 </table>
 </section>
+<a href="<c:url value='/catalog'/>">Retour Catalogue</a>

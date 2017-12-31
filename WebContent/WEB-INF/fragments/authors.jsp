@@ -26,4 +26,4 @@
 		</form>
 	</c:forEach>
 </table>
-<a href="<c:url value='/books'/>">Retour Catalogue livre</a>
+<a href="<c:url value='/catalog'/>">Retour Catalogue</a>
