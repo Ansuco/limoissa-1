@@ -2,28 +2,33 @@
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-title-asc">
 	<input type="hidden" value="title" name="sort" form="form-sort-title-asc" />
 	<input type="hidden" value="asc" name="mode" form="form-sort-title-asc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-title-asc" />
 </form>
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-title-desc">
-		<input type="hidden" value="title" name="sort" form="form-sort-title-desc" />
+	<input type="hidden" value="title" name="sort" form="form-sort-title-desc" />
 	<input type="hidden" value="desc" name="mode" form="form-sort-title-desc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-title-desc" />
 </form>
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-price-asc">
 	<input type="hidden" value="price" name="sort" form="form-sort-price-asc" />
 	<input type="hidden" value="asc" name="mode" form="form-sort-price-asc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-price-asc" />
 </form>
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-price-desc">
-		<input type="hidden" value="price" name="sort" form="form-sort-price-desc" />
+	<input type="hidden" value="price" name="sort" form="form-sort-price-desc" />
 	<input type="hidden" value="desc" name="mode" form="form-sort-price-desc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-price-desc" />
 </form>
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-availability-asc">
 	<input type="hidden" value="availability" name="sort" form="form-sort-availability-asc" />
 	<input type="hidden" value="asc" name="mode" form="form-sort-availability-asc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-availability-asc" />
 </form>
 <form method="GET" action="<c:url value='/catalog'/>" id="form-sort-availability-desc">
-		<input type="hidden" value="availability" name="sort" form="form-sort-availability-desc" />
+	<input type="hidden" value="availability" name="sort" form="form-sort-availability-desc" />
 	<input type="hidden" value="desc" name="mode" form="form-sort-availability-desc" />
+	<input type="hidden" value="${currentPage}" name="page" form="form-sort-availability-desc" />
 </form>
-
 <table id="books">
 	<tr>
 		<th>Titre <input type="submit" value="&#9650;" class="hidden_button_style" form="form-sort-title-asc" /><input type="submit" value="&#9660;" class="hidden_button_style" form="form-sort-title-desc" /></th>
@@ -54,4 +59,14 @@
 		</form>
 	</c:forEach>
 </table>
+<c:forEach begin="1" end="${noOfPages}" var="i">
+	<c:choose>
+		<c:when test="${currentPage eq i}">
+			<td title="page ${i}">${i}</td>
+		</c:when>
+		<c:otherwise>
+			<a title="page ${i}" href="<c:url value='/catalog?${(sort == null && mode == null ? "": "sort="+=sort+="&mode="+=mode+="&")}page=${i}'/>">${i}</a>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
 </section>

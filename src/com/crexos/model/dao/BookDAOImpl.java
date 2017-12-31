@@ -170,6 +170,73 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 
 		return books;
 	}
+	
+	public int getSize()
+	{
+		int size = 0;
+		try
+		{
+			PreparedStatement ps = DAOFactory.getInstance().getPreparedStatement("SELECT COUNT(ID) FROM Book");
+			ResultSet resultData = executeQuery(ps, "Impossible de récupéter le nombre maximum de livre");
+			if(resultData.next())
+				size = resultData.getInt(1);
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return size;
+	}
+	
+	
+	public List<Book> getAll(int offset, int noOfRecords)
+	{
+		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id LIMIT ?, ?";
+		
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		List<Book> books = new ArrayList<Book>();
+		try
+		{	
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setInt(1, offset);
+			ps.setInt(2, noOfRecords);
+			
+			resultData = executeQuery(ps, "Impossible de récupéter liste de livre");
+			Book book = null;
+			while (resultData.next())
+			{
+				int idbook = resultData.getInt(COLUMN_ID);
+				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
+
+				if(!books.stream().anyMatch(b -> b.getId() == idbook))
+				{
+					book = new Book();
+					book.setId(idbook);
+					book.setTitle(resultData.getString(COLUMN_TITLE));
+					book.setAvailability(resultData.getBoolean(COLUMN_AVAILABILITY));
+					book.setOverview(resultData.getString(COLUMN_OVERVIEW));
+					book.setPrice(resultData.getFloat(COLUMN_PRICE));
+
+					book.addAuthor(author);
+					books.add(book);
+				}
+				else
+					books.stream().filter(b -> b.getId() == idbook).findFirst().get().addAuthor(author);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
+		}
+
+		return books;
+	}
 
 	@Override
 	public List<Book> getAllSortedBy(String column, String mode)
@@ -234,6 +301,72 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 
+	public List<Book> getAllSortedBy(String column, String mode, int offset, int noOfRecords)
+	{
+		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id";
+		if(mode.toUpperCase().equals("ASC") || mode.toUpperCase().equals("DESC"))
+		{
+			switch(column)
+			{
+			case COLUMN_TITLE:
+				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_TITLE + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				break;
+			case COLUMN_PRICE:
+				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_PRICE + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				break;
+			case COLUMN_AVAILABILITY:
+				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_AVAILABILITY + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				break;
+			}
+		}
+
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		List<Book> books = new ArrayList<Book>();
+		try
+		{	
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+
+			ps.setInt(1, offset);
+			ps.setInt(2, noOfRecords);
+			
+			resultData = executeQuery(ps, "Impossible de récupéter liste de livre");
+			Book book = null;
+			
+			while (resultData.next())
+			{
+				int idbook = resultData.getInt(COLUMN_ID);
+				Author author = DAOFactory.getInstance().getAuthorDAO().getById(resultData.getInt("author_id"));
+
+				if(!books.stream().anyMatch(b -> b.getId() == idbook))
+				{
+					book = new Book();
+					book.setId(idbook);
+					book.setTitle(resultData.getString(COLUMN_TITLE));
+					book.setAvailability(resultData.getBoolean(COLUMN_AVAILABILITY));
+					book.setOverview(resultData.getString(COLUMN_OVERVIEW));
+					book.setPrice(resultData.getFloat(COLUMN_PRICE));
+
+					book.addAuthor(author);
+					books.add(book);
+				}
+				else
+					books.stream().filter(b -> b.getId() == idbook).findFirst().get().addAuthor(author);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
+		}
+
+		return books;
+	}
+	
+	
 	@Override
 	public int create(Book book)
 	{
