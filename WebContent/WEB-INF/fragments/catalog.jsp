@@ -43,7 +43,7 @@
 			<td>${book.price}</td>
 			<td>
 				<c:forEach items="${book.authors}" var="author">
-					<p>${author.lastName}(${author.nativeCountry})</p>
+					<p><a href="<c:url value='/authors/read?author-id=${author.id}'/>">${author.lastName}(${author.nativeCountry})</a></p>
 				</c:forEach>
 			</td>
 			<td>

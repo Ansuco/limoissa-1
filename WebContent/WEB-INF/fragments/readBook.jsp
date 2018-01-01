@@ -4,7 +4,7 @@
 <p class="label">Disponibilité : <c:if test="${book.availability == true}">En stock</c:if></p>
 <p class="label">Auteur(s) : 
 	<c:forEach items="${book.authors}" var="author" varStatus="loop">
-		${author.firstName} ${author.lastName}<c:if test="${!loop.last}">,</c:if>
+		<a href="<c:url value='/authors/read?author-id=${author.id}'/>">${author.firstName} ${author.lastName}</a><c:if test="${!loop.last}">,</c:if>
 	</c:forEach>
 </p>
 <br />
