@@ -10,8 +10,12 @@ public class ListAuthors extends AbstractAction {
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		request.setAttribute("title", "Catalogue Auteur");
 		request.setAttribute("authors", DAOFactory.getInstance().getAuthorDAO().getAll());
+		
 		
 		return new Redirect(false, "authors");
 	}

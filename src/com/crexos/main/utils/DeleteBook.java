@@ -10,6 +10,9 @@ public class DeleteBook extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			DAOFactory.getInstance().getBookDAO().delete(Integer.parseInt(request.getParameter("book-id")));

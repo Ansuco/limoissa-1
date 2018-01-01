@@ -21,7 +21,9 @@
           			<jsp:include page="addBook.jsp" />
          		</c:when>
          		<c:when test = "${actionName == 'books:read'}">
-          			<jsp:include page="readBook.jsp" />
+          			<jsp:include page="readBook.jsp">
+          				<jsp:param value="${user}" name="user" />
+					</jsp:include>
          		</c:when>
          		<c:when test = "${actionName == 'authors'}">
             		<jsp:include page="authors.jsp" />
@@ -33,7 +35,9 @@
             		<jsp:include page="addAuthor.jsp" />
          		</c:when>
          		<c:when test = "${actionName == 'authors:read'}">
-            		<jsp:include page="readAuthor.jsp" />
+            		<jsp:include page="readAuthor.jsp">
+						<jsp:param value="${user}" name="user" />
+					</jsp:include>
          		</c:when>
             </c:choose>
          </c:when>

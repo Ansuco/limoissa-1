@@ -11,6 +11,9 @@ public class DeleteAuthor extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			DAOFactory.getInstance().getAuthorDAO().delete(Integer.parseInt(request.getParameter("author-id")));

@@ -34,6 +34,9 @@ public class ImportBooks extends AbstractAction
 	{
 		Redirect redirect = new Redirect(false, "importbooks");
 
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			File file = null;

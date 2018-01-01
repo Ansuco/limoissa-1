@@ -14,6 +14,9 @@ public class DeleteJoinAuthorBook extends AbstractAction
 		String authorId = request.getParameter("author-id");
 		String bookId = request.getParameter("book-id");
 
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			((BookDAO)DAOFactory.getInstance().getBookDAO()).deleteJoinAuthorBook(Integer.parseInt(authorId), Integer.parseInt(bookId));

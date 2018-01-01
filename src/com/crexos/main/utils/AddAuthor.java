@@ -15,6 +15,9 @@ public class AddAuthor extends AbstractAction
 		Redirect redirect = new Redirect(false, "authors:add");
 		request.setAttribute("title", "Ajouter un auteur");
 		
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			Author author = new Author();

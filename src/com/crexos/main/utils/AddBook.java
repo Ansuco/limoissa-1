@@ -18,9 +18,11 @@ public class AddBook extends AbstractAction
 	public Redirect executeAction(HttpServletRequest request)
 	{
 		Redirect redirect = new Redirect(false, "books:add");
-
 		request.setAttribute("title", "Ajouter un livre");
 
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			if(request.getParameter("mode") != null && request.getParameter("mode").equals("tmpauthors"))

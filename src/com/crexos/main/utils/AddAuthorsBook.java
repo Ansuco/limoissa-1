@@ -14,6 +14,9 @@ public class AddAuthorsBook extends AbstractAction
 		String[] joinAuthorsStr = request.getParameterValues("book-add-authors");
 		int bookID = 0;
 		
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		for(String author : joinAuthorsStr)
 		{
 			String[] authorSplit = author.split("#");

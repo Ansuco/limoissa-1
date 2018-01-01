@@ -11,9 +11,14 @@ public class EditBook extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
+		
 		Book book = DAOFactory.getInstance().getBookDAO().getById(Integer.parseInt(request.getParameter("book-id")));
 		Redirect redirect = new Redirect(false, "books:edit");
 		request.setAttribute("title", "Editer un livre");
+		
 		
 		if(request.getMethod().equals("POST"))
 		{

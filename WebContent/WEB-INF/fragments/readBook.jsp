@@ -8,5 +8,10 @@
 	</c:forEach>
 </p>
 <br />
-<a href="<c:url value='/books/edit?book-id=${book.id}'/>">Editer</a>&nbsp;&nbsp;|&nbsp;
-<a href="<c:url value='/books'/>">Retour Catalogue livre</a>
+<c:if test="${user.role eq 'ADMIN'}">
+	<a href="<c:url value='/books/edit?book-id=${book.id}'/>">Editer</a>&nbsp;&nbsp;|&nbsp;
+	<a href="<c:url value='/books'/>">Retour Catalogue livre</a>
+</c:if>
+<c:if test="${user.role eq 'USER'}">
+	<a href="<c:url value='/catalog'/>">Retour Catalogue</a>
+</c:if>

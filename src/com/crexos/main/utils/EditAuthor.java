@@ -16,6 +16,9 @@ public class EditAuthor extends AbstractAction
 		Redirect redirect = new Redirect(false, "authors:edit");
 		request.setAttribute("title", "Editer un auteur");
 		
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		if(request.getMethod().equals("POST"))
 		{
 			author.setFirstname(request.getParameter("author-firstName"));

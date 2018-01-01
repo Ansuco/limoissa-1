@@ -19,6 +19,9 @@ public class ListBooks extends AbstractAction
 //		
 		//Voir JPQl
 		
+		if(!isAdmin(request))
+			return new Redirect(true, "logout");
+		
 		request.setAttribute("title", "Catalogue Livre");
 		request.setAttribute("books", DAOFactory.getInstance().getBookDAO().getAll());
 		
