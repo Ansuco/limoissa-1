@@ -397,14 +397,11 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 				{
 					for(Author author : book.getAuthors())
 					{
-						int authorID;
-						//Vérifie si un auteur n'existe pas dans la BDD avant de le crer, si il existe on récupère son ID pour la jointure avec le livre
-						if(DAOFactory.getInstance().getAuthorDAO().getAll().stream().anyMatch(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))))
-						{
-							authorID = DAOFactory.getInstance().getAuthorDAO().getAll().stream().filter(a -> (a.getFirstName().equals(author.getFirstName()) && a.getLastName().equals(author.getLastName()) && a.getNativeCountry().name().equals(author.getNativeCountry().name()))).findFirst().get().getId();
-						}
-						else
+						int authorID = DAOFactory.getInstance().getAuthorDAO().exist(author);
+						//Vérifie si un auteur n'existe pas dans la BDD avant de le créer, si il existe on récupère son ID pour la jointure avec le livre
+						if(authorID == 0)
 							authorID = DAOFactory.getInstance().getAuthorDAO().create(author);
+							
 						joinAuthor(bookID, authorID);
 					}
 				}
@@ -478,6 +475,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 	{
 		String query = "INSERT INTO authors_books (author_id, book_id) VALUES (?, ?)";	
 
+		if(existJoin(book, author))
+			return true;
+		
 		PreparedStatement ps = null;
 		boolean result = false;
 		try

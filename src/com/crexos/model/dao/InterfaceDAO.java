@@ -9,4 +9,5 @@ public interface InterfaceDAO<T>
 	public void update(T obj);
 	public int create(T obj);
 	public List<T> getAll();
+	public int exist(T obj);
 }

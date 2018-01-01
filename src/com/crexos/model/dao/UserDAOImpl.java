@@ -232,4 +232,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 			DAOFactory.getInstance().close(ps);
 		}
 	}
+
+	@Override
+	public int exist(User obj) {return 0;}
 }

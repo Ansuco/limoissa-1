@@ -53,6 +53,38 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 
 		return author;
 	}
+	
+	@Override
+	public int exist(Author author)
+	{
+		String query = "SELECT id FROM Author WHERE firstname = ? AND lastname = ?";
+
+		PreparedStatement ps = null;
+		ResultSet resultData = null;
+		int authorID = 0;
+		try
+		{
+			ps = DAOFactory.getInstance().getPreparedStatement(query);
+			ps.setString(1, author.getFirstName());
+			ps.setString(2, author.getLastName());
+
+			resultData = executeQuery(ps, "Impossible de vérifier si un auteur existe");
+
+			if(resultData.next())
+				authorID = resultData.getInt(1);
+		}
+		catch (SQLException e)
+		{
+			System.err.println("Impossible de préparer la requête Exist auteur");
+			e.printStackTrace();
+		}
+		finally
+		{			
+			DAOFactory.getInstance().close(resultData, ps);
+		}
+
+		return authorID;
+	}
 
 	@Override
 	public List<Author> getAll()
@@ -101,7 +133,11 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		String query = "INSERT INTO Author (firstname, lastname, native_country) VALUES (?, ?, ?)";
 		
 		PreparedStatement ps = null;
-		int authorID = 0;
+		int authorID = exist(author);
+		
+		if(authorID > 0)
+			return authorID;
+		
 		try
 		{
 			ps = DAOFactory.getInstance().getPreparedStatement(query);
