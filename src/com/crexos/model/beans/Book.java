@@ -3,19 +3,41 @@ package com.crexos.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "book")
 public class Book
 {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(nullable = false, columnDefinition = "INT(10) UNSIGNED")
 	public int id;
+	@Column(length=70)
 	private String title;
-	private String overview;
+	@Column(columnDefinition = "TINYINT(1) default 1")
 	private boolean availability;
+	@Column(precision=5, scale=2, columnDefinition = "DOUBLE(5,2) default 0.00")
 	private float price;
+	@Column(columnDefinition="text")
+	private String overview;
 	
-	@XmlElementWrapper(name = "authors")
-	@XmlElement(name = "author")
+	@ManyToMany(cascade=CascadeType.PERSIST)
+	@JoinTable(
+		name="Authors_Books",
+		joinColumns=@JoinColumn(name="author_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_authors")),
+		inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_books"))
+	)
 	private List<Author> authors;
 	
 	public Book()

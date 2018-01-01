@@ -25,8 +25,8 @@ public class AppListener implements ServletContextListener
      */
     public void contextDestroyed(ServletContextEvent arg0)
     { 
-//		if(emf != null && emf.isOpen())
-//			emf.close();
+		if(emf != null && emf.isOpen())
+			emf.close();
     }
 
 	/**
@@ -34,6 +34,6 @@ public class AppListener implements ServletContextListener
      */
     public void contextInitialized(ServletContextEvent arg0) 
     { 
-		//emf = Persistence.createEntityManagerFactory("Limoissa");
+		emf = Persistence.createEntityManagerFactory("Limoissa");
     }
 }

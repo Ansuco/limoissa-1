@@ -1,13 +1,29 @@
 package com.crexos.model.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User
 {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(nullable = false, columnDefinition = "INT(10) UNSIGNED")
 	private int id;
-	private String firstname;
-	private String lastname;
+	@Column(length=70, nullable=false)
 	private String pseudo;
-	private String email;
+	@Column(name="passwd", nullable=false, columnDefinition="char(40)")
 	private String password;
+	@Column(length=90, nullable=false)
+	private String firstname;
+	@Column(length=90, nullable=false)
+	private String lastname;
+	@Column(length=90, nullable=false)
+	private String email;
+	@Column(nullable=false, columnDefinition="varchar(20) default 'USER'")
 	private String role;
 	
 	public User(){}

@@ -3,8 +3,14 @@
 	<persistence-unit name="Limoissa">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+		<class>com.crexos.model.beans.User</class>
+		<class>com.crexos.model.beans.Book</class>
+		<class>com.crexos.model.beans.Author</class>
+
 		<properties>
-			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/dbtest"/>
+			<property name="hibernate.connection.datasource" value="java:comp/env/jdbc/library"/>
+			<property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop"/> -->
 			<property name="hibernate.show_sql" value="true"/>
 		</properties>

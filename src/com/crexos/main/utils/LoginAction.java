@@ -12,9 +12,7 @@ public class LoginAction extends AbstractAction
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
 	{
-		//SecurityConstraint for configure for admin or user role
 		request.setAttribute("title", "Page de connexion");
-		//TODO : encrypter mot de passe en SHA1
 		Redirect redirect = new Redirect(false, "login");
 		if(request.getMethod().equals("POST"))
 		{

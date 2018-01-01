@@ -1,13 +1,37 @@
 package com.crexos.model.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
 import com.crexos.model.utils.Country;
 
+@Entity
 public class Author
 {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(nullable = false, columnDefinition = "INT(10) UNSIGNED")
 	public int id;
+	@Column(length=70, nullable=false)
 	public String firstName;
+	@Column(length=70, nullable=false)
 	public String lastName;
+	@Column(name="native_country", nullable=true)
+	@Enumerated(EnumType.STRING)
 	public Country nativeCountry;
+	
+	@ManyToMany(cascade=CascadeType.PERSIST, mappedBy="authors")
+	private List<Book> books = new ArrayList<Book>();
 	
 	public Author(){}
 	

@@ -7,6 +7,7 @@ import com.crexos.main.utils.AbstractAction;
 import com.crexos.model.beans.User;
 import com.crexos.model.jpa.JpaUtil;
 import com.crexos.model.utils.Redirect;
+import com.crexos.model.utils.SHA1;
 
 public class SigninAction extends AbstractAction
 {
@@ -29,7 +30,9 @@ public class SigninAction extends AbstractAction
 					!firstname.isEmpty() && !lastname.isEmpty() && !pseudo.isEmpty() && !password.isEmpty() && !email.isEmpty())
 			{
 				User user = new User(firstname, lastname, pseudo, email, password);
-				
+				user.setRole("USER");
+						user.setPassword(SHA1.encryptPassword(user.getPassword()));
+						
 				EntityManager em = JpaUtil.getEntityManager();
 				
 				try
@@ -40,7 +43,7 @@ public class SigninAction extends AbstractAction
 					
 					request.getSession().setAttribute("user", user);
 					
-					redirect = new Redirect(true, "books");
+					redirect = new Redirect(true, "catalog");
 				}catch(Exception e)
 				{
 					redirect = new Redirect(true, "signin");

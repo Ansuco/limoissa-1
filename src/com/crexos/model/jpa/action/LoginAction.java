@@ -9,6 +9,7 @@ import com.crexos.main.utils.AbstractAction;
 import com.crexos.model.beans.User;
 import com.crexos.model.jpa.JpaUtil;
 import com.crexos.model.utils.Redirect;
+import com.crexos.model.utils.SHA1;
 
 public class LoginAction extends AbstractAction
 {
@@ -29,12 +30,16 @@ public class LoginAction extends AbstractAction
 
 				Query q = em.createQuery("SELECT u FROM User u WHERE pseudo=:ps AND password=:pwd");
 				q.setParameter("ps", pseudo);
-				q.setParameter("pwd", password);
+				q.setParameter("pwd", SHA1.encryptPassword(password));
 				try
 				{
 					User user =(User)q.getSingleResult();
 					request.getSession().setAttribute("user", user);
-					redirect = new Redirect(true, "books");
+					
+					if(user != null)
+						redirect = new Redirect(true, "catalog");
+					else
+						redirect = new Redirect(true, "login");
 				}
 				catch(NoResultException e)
 				{

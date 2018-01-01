@@ -4,24 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.crexos.main.utils.AbstractAction;
-import com.crexos.main.utils.AddAuthor;
-import com.crexos.main.utils.AddAuthorsBook;
-import com.crexos.main.utils.AddBook;
-import com.crexos.main.utils.CatalogAction;
-import com.crexos.main.utils.DeleteAuthor;
-import com.crexos.main.utils.DeleteBook;
-import com.crexos.main.utils.DeleteJoinAuthorBook;
-import com.crexos.main.utils.EditAuthor;
-import com.crexos.main.utils.EditBook;
-import com.crexos.main.utils.HomeBook;
-import com.crexos.main.utils.ImportBooks;
-import com.crexos.main.utils.ListAuthors;
-import com.crexos.main.utils.ListBooks;
-import com.crexos.main.utils.LoginAction;
 import com.crexos.main.utils.LogoutAction;
-import com.crexos.main.utils.ReadAuthor;
-import com.crexos.main.utils.ReadBook;
-import com.crexos.main.utils.SigninAction;
+import com.crexos.model.jpa.action.CatalogAction;
+import com.crexos.model.jpa.action.LoginAction;
+import com.crexos.model.jpa.action.SigninAction;
 
 public class ActionManager
 {
@@ -48,27 +34,34 @@ public class ActionManager
 	static
 	{
 		actions = new HashMap<String, AbstractAction>();
+//DAO Actions		
+//		actions.put(ACTION_HOME, new HomeBook());
+//		actions.put(ACTION_MAIN, new CatalogAction());
+//		actions.put(ACTION_ADD_BOOK, new AddBook());
+//		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
+//		actions.put(ACTION_EDIT_BOOK, new EditBook());
+//		actions.put(ACTION_READ_BOOK, new ReadBook());
+//		actions.put(ACTION_LIST_BOOKS, new ListBooks());
+//		actions.put(ACTION_IMPORT_BOOKS, new ImportBooks());
+//		actions.put(ACTION_DELETEJOIN_BOOK, new DeleteJoinAuthorBook());
+//		actions.put(ACTION_ADDAUTHORS_BOOK, new AddAuthorsBook());
+//		
+//		actions.put(ACTION_LOGIN, new LoginAction());
+//		actions.put(ACTION_SIGNIN, new SigninAction());
+//		actions.put(ACTION_LOGOUT, new LogoutAction());
+//		
+//		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
+//		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
+//		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
+//		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
+//		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
 		
-		actions.put(ACTION_HOME, new HomeBook());
-		actions.put(ACTION_MAIN, new CatalogAction());
-		actions.put(ACTION_ADD_BOOK, new AddBook());
-		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
-		actions.put(ACTION_EDIT_BOOK, new EditBook());
-		actions.put(ACTION_READ_BOOK, new ReadBook());
-		actions.put(ACTION_LIST_BOOKS, new ListBooks());
-		actions.put(ACTION_IMPORT_BOOKS, new ImportBooks());
-		actions.put(ACTION_DELETEJOIN_BOOK, new DeleteJoinAuthorBook());
-		actions.put(ACTION_ADDAUTHORS_BOOK, new AddAuthorsBook());
-		
+//Hibernate Actions
 		actions.put(ACTION_LOGIN, new LoginAction());
 		actions.put(ACTION_SIGNIN, new SigninAction());
 		actions.put(ACTION_LOGOUT, new LogoutAction());
 		
-		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
-		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
-		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
-		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
-		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
+		actions.put(ACTION_MAIN, new CatalogAction());
 	}
 	
 	public static AbstractAction getAction(String actionName)
