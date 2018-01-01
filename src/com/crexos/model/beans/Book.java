@@ -3,6 +3,9 @@ package com.crexos.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+
 public class Book
 {
 	public int id;
@@ -10,6 +13,9 @@ public class Book
 	private String overview;
 	private boolean availability;
 	private float price;
+	
+	@XmlElementWrapper(name = "authors")
+	@XmlElement(name = "author")
 	private List<Author> authors;
 	
 	public Book()

@@ -17,7 +17,8 @@ import com.crexos.model.utils.Redirect;
 		name="FrontServlet",
 		value = {"/home", "/catalog", "/logout", "/login", "/signin", 
 				"/books", "/books/add", "/books/delete", "/books/edit", "/books/read", "/books/deletejoin", "/books/addauthors",
-				"/authors", "/authors/edit", "/authors/add", "/authors/read", "/authors/delete"}
+				"/authors", "/authors/edit", "/authors/add", "/authors/read", "/authors/delete",
+				"/importbooks"}
 		)
 public class FrontServlet extends HttpServlet
 {
@@ -54,7 +55,6 @@ public class FrontServlet extends HttpServlet
 //		
 //		if(!actionName.equals("home"))
 //			ActionManager.getAction(actionName).executeAction(request);
-
 		String actionName = getActionName(request);
 		Redirect redirect = ActionManager.getAction(actionName).executeAction(request);
 		request.setAttribute("actionName", redirect.getAction());

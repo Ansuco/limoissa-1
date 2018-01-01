@@ -8,6 +8,7 @@
 		<ul>
 			<li><a href="<c:url value='/books'/>">Catalogue Livre</a></li>
 			<li><a href="<c:url value='/authors'/>">Catalogue Auteur</a></li>
+			<li><a href="<c:url value='/importbooks'/>">Importer Livres</a></li>
 		</ul>
 	</c:when>
 	<c:otherwise>

@@ -7,4 +7,11 @@
       <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
     </jsp-property-group>
   </jsp-config>
+  <context-param> 
+   <description>Location to store uploaded file</description> 
+   <param-name>file-upload</param-name> 
+   <param-value>
+      c:\Apache\tomcat-8.5.24\webapps\data\
+   </param-value> 
+</context-param>
 </web-app>

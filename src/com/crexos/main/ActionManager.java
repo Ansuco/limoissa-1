@@ -7,17 +7,18 @@ import com.crexos.main.utils.AbstractAction;
 import com.crexos.main.utils.AddAuthor;
 import com.crexos.main.utils.AddAuthorsBook;
 import com.crexos.main.utils.AddBook;
+import com.crexos.main.utils.CatalogAction;
 import com.crexos.main.utils.DeleteAuthor;
 import com.crexos.main.utils.DeleteBook;
 import com.crexos.main.utils.DeleteJoinAuthorBook;
 import com.crexos.main.utils.EditAuthor;
 import com.crexos.main.utils.EditBook;
 import com.crexos.main.utils.HomeBook;
+import com.crexos.main.utils.ImportBooks;
 import com.crexos.main.utils.ListAuthors;
 import com.crexos.main.utils.ListBooks;
 import com.crexos.main.utils.LoginAction;
 import com.crexos.main.utils.LogoutAction;
-import com.crexos.main.utils.CatalogAction;
 import com.crexos.main.utils.ReadAuthor;
 import com.crexos.main.utils.ReadBook;
 import com.crexos.main.utils.SigninAction;
@@ -31,6 +32,7 @@ public class ActionManager
 	public static final String ACTION_EDIT_BOOK = "books:edit";
 	public static final String ACTION_READ_BOOK = "books:read";
 	public static final String ACTION_LIST_BOOKS = "books";
+	public static final String ACTION_IMPORT_BOOKS = "importbooks";
 	public static final String ACTION_DELETEJOIN_BOOK = "books:deletejoin";
 	public static final String ACTION_ADDAUTHORS_BOOK = "books:addauthors";
 	public static final String ACTION_LIST_AUTHORS = "authors";
@@ -54,6 +56,7 @@ public class ActionManager
 		actions.put(ACTION_EDIT_BOOK, new EditBook());
 		actions.put(ACTION_READ_BOOK, new ReadBook());
 		actions.put(ACTION_LIST_BOOKS, new ListBooks());
+		actions.put(ACTION_IMPORT_BOOKS, new ImportBooks());
 		actions.put(ACTION_DELETEJOIN_BOOK, new DeleteJoinAuthorBook());
 		actions.put(ACTION_ADDAUTHORS_BOOK, new AddAuthorsBook());
 		

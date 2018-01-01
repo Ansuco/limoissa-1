@@ -64,4 +64,8 @@ public class Author
 		this.nativeCountry = nativeCountry;
 	}
 	
+	public void setNativeCountry(String nativeCountry)
+	{
+		this.nativeCountry = Country.valueOf(nativeCountry);
+	}
 }
