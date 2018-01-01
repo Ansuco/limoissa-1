@@ -6,13 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.crexos.model.beans.Book;
 import com.crexos.model.dao.BookDAO;
-import com.crexos.model.dao.BookDAOImpl;
 import com.crexos.model.dao.DAOFactory;
 import com.crexos.model.utils.Redirect;
 
 public class CatalogAction extends AbstractAction
 {
-	private final int MAX_PER_PAGE = 2;
+	private final int MAX_PER_PAGE = 10;
 	
 	@Override
 	public Redirect executeAction(HttpServletRequest request)
@@ -34,11 +33,11 @@ public class CatalogAction extends AbstractAction
 			{
 				sort = request.getParameter("sort");
 				mode = request.getParameter("mode");
-				books = ((BookDAOImpl)DAOFactory.getInstance().getBookDAO()).getAllSortedBy(sort, mode, (page - 1) * recordsPerPage, recordsPerPage);
+				books = ((BookDAO)DAOFactory.getInstance().getBookDAO()).getAllSortedBy(sort, mode, (page - 1) * recordsPerPage, recordsPerPage);
 			}
 			else
 			{
-				books = ((BookDAOImpl)DAOFactory.getInstance().getBookDAO()).getAll((page - 1) * recordsPerPage, recordsPerPage);
+				books = ((BookDAO)DAOFactory.getInstance().getBookDAO()).getAll((page - 1) * recordsPerPage, recordsPerPage);
 			}
 		}
 		request.setAttribute("books", books);
@@ -47,7 +46,7 @@ public class CatalogAction extends AbstractAction
 		int noOfPages = 1;		
 		if(books != null)
 		{
-			noOfRecords = ((BookDAOImpl)DAOFactory.getInstance().getBookDAO()).getSize();
+			noOfRecords = ((BookDAO)DAOFactory.getInstance().getBookDAO()).getSize();
 			noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 		}
 

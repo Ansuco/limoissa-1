@@ -171,6 +171,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 	
+	@Override
 	public int getSize()
 	{
 		int size = 0;
@@ -189,7 +190,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return size;
 	}
 	
-	
+	@Override
 	public List<Book> getAll(int offset, int noOfRecords)
 	{
 		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id LIMIT ?, ?";
@@ -301,6 +302,7 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 
+	@Override
 	public List<Book> getAllSortedBy(String column, String mode, int offset, int noOfRecords)
 	{
 		String query = "SELECT * FROM Book b INNER JOIN Authors_books ab ON ab.book_id = b.id";
@@ -309,13 +311,16 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 			switch(column)
 			{
 			case COLUMN_TITLE:
-				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_TITLE + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				query += " ORDER BY b." + COLUMN_TITLE + " " + mode.toUpperCase();
+				query = query.replace("Book b", "(SELECT * FROM Book LIMIT ?,?) as b");
 				break;
 			case COLUMN_PRICE:
-				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_PRICE + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				query += " ORDER BY b." + COLUMN_TITLE + " " + mode.toUpperCase();
+				query = query.replace("Book b", "(SELECT * FROM Book LIMIT ?,?) as b");
 				break;
 			case COLUMN_AVAILABILITY:
-				query = query.replace("Book b", "(SELECT * FROM Book ORDER BY " + COLUMN_AVAILABILITY + " " + mode.toUpperCase() + " LIMIT ?,?) as b");
+				query += " ORDER BY b." + COLUMN_TITLE + " " + mode.toUpperCase();
+				query = query.replace("Book b", "(SELECT * FROM Book LIMIT ?,?) as b");
 				break;
 			}
 		}

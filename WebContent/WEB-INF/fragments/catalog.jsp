@@ -65,7 +65,7 @@
 			<td title="page ${i}">${i}</td>
 		</c:when>
 		<c:otherwise>
-			<a title="page ${i}" href="<c:url value='/catalog?${(sort == null && mode == null ? "": "sort="+=sort+="&mode="+=mode+="&")}page=${i}'/>">${i}</a>
+			<a title="page ${i}" href="<c:url value='/catalog?${(empty sort && empty mode ? "" : "sort="+=sort+="&mode="+=mode+="&")}page=${i}'/>">${i}</a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
