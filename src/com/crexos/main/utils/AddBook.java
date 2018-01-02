@@ -58,7 +58,7 @@ public class AddBook extends AbstractAction
 			}
 			else
 			{
-				Book book = new Book(request.getParameter("book-title"), "résumé absent", true, Float.parseFloat(request.getParameter("book-price")), 
+				Book book = new Book(request.getParameter("book-title"), request.getParameter("book-overview"), true, Float.parseFloat(request.getParameter("book-price")), 
 						(request.getSession().getAttribute("tmpauthorsforbook") == null ? new ArrayList<Author>(): (List<Author>)request.getSession().getAttribute("tmpauthorsforbook"))
 						);
 

@@ -12,6 +12,7 @@ import com.crexos.model.jpa.action.CatalogAction;
 import com.crexos.model.jpa.action.DeleteAuthor;
 import com.crexos.model.jpa.action.DeleteBook;
 import com.crexos.model.jpa.action.EditAuthor;
+import com.crexos.model.jpa.action.EditBook;
 import com.crexos.model.jpa.action.ListAuthors;
 import com.crexos.model.jpa.action.ListBooks;
 import com.crexos.model.jpa.action.LoginAction;
@@ -76,6 +77,7 @@ public class ActionManager
 		actions.put(ACTION_READ_BOOK, new ReadBook());
 		actions.put(ACTION_LIST_BOOKS, new ListBooks());
 		actions.put(ACTION_ADD_BOOK, new AddBook());
+		actions.put(ACTION_EDIT_BOOK, new EditBook());
 		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
 		
 		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
