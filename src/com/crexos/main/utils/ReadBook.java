@@ -19,5 +19,4 @@ public class ReadBook extends AbstractAction
 		
 		return redirect;
 	}
-
 }

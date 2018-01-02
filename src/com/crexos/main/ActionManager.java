@@ -7,6 +7,7 @@ import com.crexos.main.utils.AbstractAction;
 import com.crexos.main.utils.LogoutAction;
 import com.crexos.model.jpa.action.CatalogAction;
 import com.crexos.model.jpa.action.LoginAction;
+import com.crexos.model.jpa.action.ReadBook;
 import com.crexos.model.jpa.action.SigninAction;
 
 public class ActionManager
@@ -62,6 +63,7 @@ public class ActionManager
 		actions.put(ACTION_LOGOUT, new LogoutAction());
 		
 		actions.put(ACTION_MAIN, new CatalogAction());
+		actions.put(ACTION_READ_BOOK, new ReadBook());
 	}
 	
 	public static AbstractAction getAction(String actionName)
