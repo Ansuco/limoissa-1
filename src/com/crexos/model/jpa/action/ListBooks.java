@@ -29,7 +29,7 @@ public class ListBooks extends AbstractAction
 		{
 			books = query.getResultList();
 		}
-		catch(Exception e)
+		catch(ClassCastException e)
 		{
 			em.getTransaction().rollback();
 			e.printStackTrace();

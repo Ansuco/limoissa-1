@@ -40,15 +40,16 @@ public class CatalogAction extends AbstractAction
 				sort = request.getParameter("sort");
 				mode = request.getParameter("mode");
 				
-				Query q = em.createQuery("SELECT b FROM Book b");
-				books = q.getResultList();
-				//books = ((BookDAO)DAOFactory.getInstance().getBookDAO()).getAllSortedBy(sort, mode, (page - 1) * recordsPerPage, recordsPerPage);
+				String strQuery = "SELECT b FROM Book b";
+				strQuery += " ORDER BY b." + request.getParameter("sort") + " " + mode.toUpperCase();
+				
+				Query q = em.createQuery(strQuery);
+				books = q.setFirstResult((page - 1) * recordsPerPage).setMaxResults(recordsPerPage).getResultList(); 
 			}
 			else
 			{
 				Query q = em.createQuery("SELECT b FROM Book b");
-				books = q.getResultList();
-				//books = ((BookDAO)DAOFactory.getInstance().getBookDAO()).getAll((page - 1) * recordsPerPage, recordsPerPage);
+				books = q.setFirstResult((page - 1) * recordsPerPage).setMaxResults(recordsPerPage).getResultList(); 
 			}
 		}
 		request.setAttribute("books", books);
