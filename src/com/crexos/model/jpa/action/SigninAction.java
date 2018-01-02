@@ -31,7 +31,7 @@ public class SigninAction extends AbstractAction
 			{
 				User user = new User(firstname, lastname, pseudo, email, password);
 				user.setRole("USER");
-						user.setPassword(SHA1.encryptPassword(user.getPassword()));
+				user.setPassword(SHA1.encryptPassword(user.getPassword()));
 						
 				EntityManager em = JpaUtil.getEntityManager();
 				

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.crexos.main.utils.AbstractAction;
 import com.crexos.main.utils.HomeBook;
 import com.crexos.main.utils.LogoutAction;
+import com.crexos.model.jpa.action.AddAuthor;
 import com.crexos.model.jpa.action.CatalogAction;
 import com.crexos.model.jpa.action.DeleteAuthor;
 import com.crexos.model.jpa.action.DeleteBook;
@@ -74,6 +75,7 @@ public class ActionManager
 		actions.put(ACTION_LIST_BOOKS, new ListBooks());
 		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
 		
+		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
 		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
 		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
 		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
