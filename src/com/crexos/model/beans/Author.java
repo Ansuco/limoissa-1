@@ -3,7 +3,6 @@ package com.crexos.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,7 +29,7 @@ public class Author
 	@Enumerated(EnumType.STRING)
 	public Country nativeCountry;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST, mappedBy="authors")
+	@ManyToMany(mappedBy="authors")
 	private List<Book> books = new ArrayList<Book>();
 	
 	public Author(){}
@@ -91,5 +90,16 @@ public class Author
 	public void setNativeCountry(String nativeCountry)
 	{
 		this.nativeCountry = Country.valueOf(nativeCountry);
+	}
+	
+	//For Hibernate Add behavior for Book component
+	public void addBook(Book book) {
+		this.books.add(book);
+	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 }

@@ -3,7 +3,6 @@ package com.crexos.model.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -32,7 +31,7 @@ public class Book
 	@Column(columnDefinition="text")
 	private String overview;
 	
-	@ManyToMany(cascade=CascadeType.PERSIST)
+	@ManyToMany
 	@JoinTable(
 		name="Authors_Books",
 		joinColumns=@JoinColumn(name="author_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_authors")),
@@ -114,6 +113,7 @@ public class Book
 	public void addAuthor(Author author)
 	{
 		this.getAuthors().add(author);
+		author.addBook(this);
 	}
 
 	public boolean getAvailability() {
