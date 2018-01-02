@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.crexos.main.utils.AbstractAction;
+import com.crexos.main.utils.HomeBook;
 import com.crexos.main.utils.LogoutAction;
 import com.crexos.model.jpa.action.CatalogAction;
 import com.crexos.model.jpa.action.LoginAction;
+import com.crexos.model.jpa.action.ReadAuthor;
 import com.crexos.model.jpa.action.ReadBook;
 import com.crexos.model.jpa.action.SigninAction;
 
@@ -58,12 +60,15 @@ public class ActionManager
 //		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
 		
 //Hibernate Actions
+		actions.put(ACTION_HOME, new HomeBook());
 		actions.put(ACTION_LOGIN, new LoginAction());
 		actions.put(ACTION_SIGNIN, new SigninAction());
 		actions.put(ACTION_LOGOUT, new LogoutAction());
 		
 		actions.put(ACTION_MAIN, new CatalogAction());
 		actions.put(ACTION_READ_BOOK, new ReadBook());
+		
+		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
 	}
 	
 	public static AbstractAction getAction(String actionName)
