@@ -31,7 +31,7 @@ public class SigninAction extends AbstractAction
 				if(userId > 0)
 				{	
 					request.getSession().setAttribute("user", user);
-					redirect = new Redirect(true, "main");
+					redirect = new Redirect(true, "catalog");
 				}
 				else
 					redirect = new Redirect(true, "signin");

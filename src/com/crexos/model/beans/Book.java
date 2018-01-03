@@ -34,8 +34,8 @@ public class Book
 	@ManyToMany
 	@JoinTable(
 		name="Authors_Books",
-		joinColumns=@JoinColumn(name="author_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_authors")),
-		inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_books"))
+		joinColumns=@JoinColumn(name="book_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_books")),
+		inverseJoinColumns=@JoinColumn(name="author_id", referencedColumnName="id", foreignKey=@ForeignKey(name="fk_authors"))
 	)
 	private List<Author> authors;
 	

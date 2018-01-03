@@ -4,21 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.crexos.main.utils.AbstractAction;
-import com.crexos.main.utils.HomeBook;
-import com.crexos.main.utils.LogoutAction;
-import com.crexos.model.jpa.action.AddAuthor;
-import com.crexos.model.jpa.action.AddBook;
-import com.crexos.model.jpa.action.CatalogAction;
-import com.crexos.model.jpa.action.DeleteAuthor;
-import com.crexos.model.jpa.action.DeleteBook;
-import com.crexos.model.jpa.action.EditAuthor;
-import com.crexos.model.jpa.action.EditBook;
-import com.crexos.model.jpa.action.ListAuthors;
-import com.crexos.model.jpa.action.ListBooks;
-import com.crexos.model.jpa.action.LoginAction;
-import com.crexos.model.jpa.action.ReadAuthor;
-import com.crexos.model.jpa.action.ReadBook;
-import com.crexos.model.jpa.action.SigninAction;
 
 public class ActionManager
 {
@@ -46,45 +31,46 @@ public class ActionManager
 	{
 		actions = new HashMap<String, AbstractAction>();
 //DAO Actions		
-//		actions.put(ACTION_HOME, new HomeBook());
-//		actions.put(ACTION_MAIN, new CatalogAction());
-//		actions.put(ACTION_ADD_BOOK, new AddBook());
-//		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
-//		actions.put(ACTION_EDIT_BOOK, new EditBook());
-//		actions.put(ACTION_READ_BOOK, new ReadBook());
-//		actions.put(ACTION_LIST_BOOKS, new ListBooks());
-//		actions.put(ACTION_IMPORT_BOOKS, new ImportBooks());
-//		actions.put(ACTION_DELETEJOIN_BOOK, new DeleteJoinAuthorBook());
-//		actions.put(ACTION_ADDAUTHORS_BOOK, new AddAuthorsBook());
+//		actions.put(ACTION_HOME, new com.crexos.main.utils.HomeBook());
+//		actions.put(ACTION_MAIN, new com.crexos.main.utils.CatalogAction());
+//		actions.put(ACTION_ADD_BOOK, new com.crexos.main.utils.AddBook());
+//		actions.put(ACTION_DELETE_BOOK, new com.crexos.main.utils.DeleteBook());
+//		actions.put(ACTION_EDIT_BOOK, new com.crexos.main.utils.EditBook());
+//		actions.put(ACTION_READ_BOOK, new com.crexos.main.utils.ReadBook());
+//		actions.put(ACTION_LIST_BOOKS, new com.crexos.main.utils.ListBooks());
+//		actions.put(ACTION_IMPORT_BOOKS, new com.crexos.main.utils.ImportBooks());
+//		actions.put(ACTION_DELETEJOIN_BOOK, new com.crexos.main.utils.DeleteJoinAuthorBook());
+//		actions.put(ACTION_ADDAUTHORS_BOOK, new com.crexos.main.utils.AddAuthorsBook());
 //		
-//		actions.put(ACTION_LOGIN, new LoginAction());
-//		actions.put(ACTION_SIGNIN, new SigninAction());
-//		actions.put(ACTION_LOGOUT, new LogoutAction());
+//		actions.put(ACTION_LOGIN, new com.crexos.main.utils.LoginAction());
+//		actions.put(ACTION_SIGNIN, new com.crexos.main.utils.SigninAction());
+//		actions.put(ACTION_LOGOUT, new com.crexos.main.utils.LogoutAction());
 //		
-//		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
-//		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
-//		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
-//		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
-//		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
+//		actions.put(ACTION_LIST_AUTHORS, new com.crexos.main.utils.ListAuthors());
+//		actions.put(ACTION_EDIT_AUTHOR, new com.crexos.main.utils.EditAuthor());
+//		actions.put(ACTION_DELETE_AUTHOR, new com.crexos.main.utils.DeleteAuthor());
+//		actions.put(ACTION_ADD_AUTHOR, new com.crexos.main.utils.AddAuthor());
+//		actions.put(ACTION_READ_AUTHOR, new com.crexos.main.utils.ReadAuthor());
 		
 //Hibernate Actions
-		actions.put(ACTION_HOME, new HomeBook());
-		actions.put(ACTION_LOGIN, new LoginAction());
-		actions.put(ACTION_SIGNIN, new SigninAction());
-		actions.put(ACTION_LOGOUT, new LogoutAction());
+		actions.put(ACTION_HOME, new com.crexos.main.utils.HomeBook());
+		actions.put(ACTION_LOGIN, new com.crexos.model.jpa.action.LoginAction());
+		actions.put(ACTION_SIGNIN, new com.crexos.model.jpa.action.SigninAction());
+		actions.put(ACTION_LOGOUT, new com.crexos.main.utils.LogoutAction());
 		
-		actions.put(ACTION_MAIN, new CatalogAction());
-		actions.put(ACTION_READ_BOOK, new ReadBook());
-		actions.put(ACTION_LIST_BOOKS, new ListBooks());
-		actions.put(ACTION_ADD_BOOK, new AddBook());
-		actions.put(ACTION_EDIT_BOOK, new EditBook());
-		actions.put(ACTION_DELETE_BOOK, new DeleteBook());
+		actions.put(ACTION_MAIN, new com.crexos.model.jpa.action.CatalogAction());
+		actions.put(ACTION_READ_BOOK, new com.crexos.model.jpa.action.ReadBook());
+		actions.put(ACTION_LIST_BOOKS, new com.crexos.model.jpa.action.ListBooks());
+		actions.put(ACTION_ADD_BOOK, new com.crexos.model.jpa.action.AddBook());
+		actions.put(ACTION_EDIT_BOOK, new com.crexos.model.jpa.action.EditBook());
+		actions.put(ACTION_IMPORT_BOOKS, new com.crexos.main.utils.ImportBooks());
+		actions.put(ACTION_DELETE_BOOK, new com.crexos.model.jpa.action.DeleteBook());
 		
-		actions.put(ACTION_ADD_AUTHOR, new AddAuthor());
-		actions.put(ACTION_LIST_AUTHORS, new ListAuthors());
-		actions.put(ACTION_READ_AUTHOR, new ReadAuthor());
-		actions.put(ACTION_EDIT_AUTHOR, new EditAuthor());
-		actions.put(ACTION_DELETE_AUTHOR, new DeleteAuthor());
+		actions.put(ACTION_ADD_AUTHOR, new com.crexos.model.jpa.action.AddAuthor());
+		actions.put(ACTION_LIST_AUTHORS, new com.crexos.model.jpa.action.ListAuthors());
+		actions.put(ACTION_READ_AUTHOR, new com.crexos.model.jpa.action.ReadAuthor());
+		actions.put(ACTION_EDIT_AUTHOR, new com.crexos.model.jpa.action.EditAuthor());
+		actions.put(ACTION_DELETE_AUTHOR, new com.crexos.model.jpa.action.DeleteAuthor());
 	}
 	
 	public static AbstractAction getAction(String actionName)

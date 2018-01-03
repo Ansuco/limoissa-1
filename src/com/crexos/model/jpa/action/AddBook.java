@@ -75,7 +75,7 @@ public class AddBook extends AbstractAction
 					redirect = new Redirect(true, "catalog");
 				}catch(Exception e)
 				{
-					redirect = new Redirect(true, "signin");
+					redirect = new Redirect(true, "book:add");
 					em.getTransaction().rollback();
 					e.printStackTrace();
 				}
