@@ -9,6 +9,9 @@ import java.util.List;
 import com.crexos.model.beans.User;
 import com.crexos.model.utils.SHA1;
 
+/*
+ *  L'implémentation concrètre de User pour la persistence en base de donnée
+ */
 public class UserDAOImpl extends AbstractDAO implements UserDAO
 {	
 	private final String COLUMN_ID = "id";
@@ -22,6 +25,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 
 	public UserDAOImpl(){}
 
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#getById(int)
+	 */
 	@Override
 	public User getById(int id)
 	{
@@ -64,6 +70,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		return user;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.UserDAO#getByPseudoPass(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public User getByPseudoPass(String pseudo, String password)
 	{
@@ -106,7 +115,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		return user;
 	}
 
-
+/*
+ * @see com.crexos.model.dao.InterfaceDAO#getAll()
+ */
 	@Override
 	public List<User> getAll()
 	{
@@ -150,6 +161,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		return users;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#create(java.lang.Object)
+	 */
 	@Override
 	public int create(User user)
 	{	
@@ -181,6 +195,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		return userId;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#update(java.lang.Object)
+	 */
 	@Override
 	public void update(User user)
 	{
@@ -209,6 +226,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		}
 	}
 
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#delete(int)
+	 */
 	@Override
 	public void delete(int id)
 	{
@@ -233,6 +253,9 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO
 		}
 	}
 
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#exist(java.lang.Object)
+	 */
 	@Override
 	public int exist(User obj) {return 0;}
 }

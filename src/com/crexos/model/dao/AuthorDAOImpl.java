@@ -9,6 +9,9 @@ import java.util.List;
 import com.crexos.model.beans.Author;
 import com.crexos.model.utils.Country;
 
+/*
+ *  L'implémentation concrètre de Author pour la persistence en base de donnée
+ */
 public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 {
 	private final String COLUMN_ID = "id";
@@ -18,6 +21,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 
 	public AuthorDAOImpl(){}
 
+	/*
+	 * @see com.crexos.model.dao.AuthorDAO#getById(int)
+	 */
 	@Override
 	public Author getById(int id)
 	{
@@ -54,6 +60,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		return author;
 	}
 	
+	/*
+	 * @see com.crexos.model.dao.InterfaceDAO#exist(java.lang.Object)
+	 */
 	@Override
 	public int exist(Author author)
 	{
@@ -86,6 +95,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		return authorID;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.AuthorDAO#getAll()
+	 */
 	@Override
 	public List<Author> getAll()
 	{
@@ -127,6 +139,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		return authors;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.AuthorDAO#create(com.crexos.model.beans.Author)
+	 */
 	@Override
 	public int create(Author author)
 	{
@@ -160,6 +175,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		return authorID;
 	}
 
+	/*
+	 * @see com.crexos.model.dao.AuthorDAO#update(com.crexos.model.beans.Author)
+	 */
 	@Override
 	public void update(Author author)
 	{
@@ -187,6 +205,9 @@ public class AuthorDAOImpl extends AbstractDAO implements AuthorDAO
 		}
 	}
 
+	/*
+	 * @see com.crexos.model.dao.AuthorDAO#delete(int)
+	 */
 	@Override
 	public void delete(int id)
 	{

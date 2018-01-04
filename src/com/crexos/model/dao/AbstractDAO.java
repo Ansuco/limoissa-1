@@ -6,8 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/*
+ * Methode commune à nos AO pour executer des requêtes en base de donnée
+ */
 public abstract class AbstractDAO
 {
+	/*
+	 * Execute une requête par exemple SELECT
+	 * @param query la requête SQL que l'on souhaite executer
+	 * @param exceptionMessage un message à afficher en console lorsqu'une exception est déclenché
+	 * @return le resultat de la requete
+	 */
 	@Deprecated
 	public ResultSet executeQuery(String query, String exceptionMessage)
 	{
@@ -31,6 +40,12 @@ public abstract class AbstractDAO
 		return result;
 	}
 	
+	/*
+	 * Execute une requête paramétré par exemple SELECT
+	 * @param ps la requête paramétré SQL que l'on souhaite executer
+	 * @param exceptionMessage un message à afficher en console lorsqu'une exception est déclenché
+	 * @return le resultat de la requete
+	 */
 	public ResultSet executeQuery(PreparedStatement ps, String exceptionMessage)
 	{
 		ResultSet result = null;
@@ -47,6 +62,12 @@ public abstract class AbstractDAO
 		return result;
 	}
 
+	/*
+	 * Execute une requête par exemple UPDATE
+	 * @param query la requête SQL que l'on souhaite executer
+	 * @param exceptionMessage un message à afficher en console lorsqu'une exception est déclenché
+	 * @return le nombre de résultat affecté par la requête ou un identifiant si la requête c'est INSERT INTO
+	 */
 	@Deprecated
 	public int executeUpdate(String query, String exceptionMessage)
 	{
@@ -79,6 +100,12 @@ public abstract class AbstractDAO
 		return result;
 	}
 	
+	/*
+	 * Execute une requête paramètré par exemple UPDATE
+	 * @param query la requête paramétré SQL que l'on souhaite executer
+	 * @param exceptionMessage un message à afficher en console lorsqu'une exception est déclenché
+	 * @return le nombre de résultat affecté par la requête ou un identifiant si la requête c'est INSERT INTO
+	 */
 	public int executeUpdate(PreparedStatement ps, String exceptionMessage)
 	{
 		int result = 0;
@@ -112,6 +139,11 @@ public abstract class AbstractDAO
 		return result;
 	}
 	
+	/*
+	 * ATTENTION : Ne fonctionne pas, ne surtout pas utiliser, sinon bug assuré
+	 * Il faut supprimer cette méthode qui ne sert strictement à rien :p
+	 * L'ID de l'insert into est récupéré à la volé par la méthode executeUpdate 
+	 */
 	@Deprecated
 	public int lastID()
 	{

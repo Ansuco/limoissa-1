@@ -9,6 +9,9 @@ import java.util.List;
 import com.crexos.model.beans.Author;
 import com.crexos.model.beans.Book;
 
+/*
+ *  L'implémentation concrètre de Book pour la persistence en base de donnée
+ */
 public class BookDAOImpl extends AbstractDAO implements BookDAO
 {
 	private final String COLUMN_ID = "id";
@@ -19,6 +22,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 
 	public BookDAOImpl(){}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getById(int)
+	 */
 	@Override
 	public Book getById(int id)
 	{
@@ -63,6 +70,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return book;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.InterfaceDAO#exist(java.lang.Object)
+	 */
 	public int exist(Book book)
 	{
 		String query = "SELECT id FROM Book WHERE title = ?";
@@ -93,6 +104,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return bookID;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#existJoin(int, int)
+	 */
 	public boolean existJoin(int bookId, int authorId)
 	{
 		String query = "SELECT * FROM authors_books WHERE author_id = ? AND book_id = ?";
@@ -124,6 +139,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return exist;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getAll()
+	 */
 	@Override
 	public List<Book> getAll()
 	{
@@ -171,6 +190,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getSize()
+	 */
 	@Override
 	public int getSize()
 	{
@@ -190,6 +213,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return size;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getAll(int, int)
+	 */
 	@Override
 	public List<Book> getAll(int offset, int noOfRecords)
 	{
@@ -239,6 +266,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getAllSortedBy(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public List<Book> getAllSortedBy(String column, String mode)
 	{
@@ -302,6 +333,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#getAllSortedBy(java.lang.String, java.lang.String, int, int)
+	 */
 	@Override
 	public List<Book> getAllSortedBy(String column, String mode, int offset, int noOfRecords)
 	{
@@ -371,7 +406,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return books;
 	}
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#create(com.crexos.model.beans.Book)
+	 */
 	@Override
 	public int create(Book book)
 	{
@@ -419,6 +457,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return bookID;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#update(com.crexos.model.beans.Book)
+	 */
 	@Override
 	public void update(Book book)
 	{
@@ -471,6 +513,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#joinAuthor(int, int)
+	 */
 	public boolean joinAuthor(int book, int author)
 	{
 		String query = "INSERT INTO authors_books (author_id, book_id) VALUES (?, ?)";	
@@ -501,6 +547,9 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return result;
 	}
 
+	/*
+	 * 
+	 */
 	public boolean deleteJoinAuthor(int book)
 	{
 		String query = "DELETE FROM authors_books WHERE book_id =?" ;
@@ -528,6 +577,10 @@ public class BookDAOImpl extends AbstractDAO implements BookDAO
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.crexos.model.dao.BookDAO#deleteJoinAuthorBook(int, int)
+	 */
 	public boolean deleteJoinAuthorBook(int authorId, int bookId)
 	{
 		String query = "DELETE FROM authors_books WHERE author_id =? AND book_id =?" ;
