@@ -50,12 +50,25 @@ public class AddBook extends AbstractAction
 
 				String[] tmpAuthors = request.getParameterValues("book-add-authors");
 
-				for(String strAuthorID : tmpAuthors)
-				{
-					Author tmpA = DAOFactory.getInstance().getAuthorDAO().getById(Integer.parseInt(strAuthorID));
-					tmpauthors.add(tmpA);
-				}
 
+				EntityManager em1 = JpaUtil.getEntityManager();
+				try
+				{
+					for(String strAuthorID : tmpAuthors)
+					{
+						//Author tmpA = DAOFactory.getInstance().getAuthorDAO().getById(Integer.parseInt(strAuthorID));
+						Author tmpA = em1.find(Author.class, Integer.parseInt(strAuthorID));
+						tmpauthors.add(tmpA);
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally
+				{					
+					em1.close();
+				}
 				redirect = new Redirect(true, "books/add");
 			}
 			else

@@ -1,7 +1,6 @@
 package com.crexos.model.jpa.action;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
