@@ -49,7 +49,7 @@
 		<c:otherwise>
 			<section>
 				<article>
-					TP Limoissa résumé...
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet lacinia leo vel lacinia. Aliquam porttitor at felis et finibus. Mauris velit quam, porta nec fermentum sit amet, pretium sit amet ipsum. Nullam ut porttitor urna. Quisque sit amet fringilla lacus. Fusce accumsan odio id nisi dapibus, at porta tellus rhoncus.
 				</article>
 			</section>
 		</c:otherwise>
